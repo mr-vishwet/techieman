@@ -1,0 +1,1079 @@
+{
+  "generatedAt": "2026-11-25T19:56:17.468Z",
+  "scope": "full bank",
+  "questionsChecked": 320,
+  "liveQuestions": 320,
+  "quarantined": [],
+  "checksRun": 543,
+  "failures": [],
+  "warnings": [
+    {
+      "id": "1.3-q01",
+      "gate": "G1",
+      "message": "two options differ only by punctuation/quoting — confirm they are genuinely distinct answers"
+    },
+    {
+      "id": "1.4-q02",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.1-q04",
+      "gate": "G1",
+      "message": "two options differ only by punctuation/quoting — confirm they are genuinely distinct answers"
+    },
+    {
+      "id": "1.1-q04",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.1-q05",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.1-q06",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.1-q07",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.1-q08",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.1-q10",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.2-q03",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.2-q04",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.2-q07",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.2-q10",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.3-q03",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.3-q04",
+      "gate": "G1",
+      "message": "two options differ only by punctuation/quoting — confirm they are genuinely distinct answers"
+    },
+    {
+      "id": "1.3-q06",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.3-q07",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.3-q09",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.3-q10",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.4-q03",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.4-q05",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.4-q06",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.4-q07",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "1.4-q10",
+      "gate": "G6",
+      "message": "no machine-checkable snippet — M3 hand-verified, not machine-checked"
+    },
+    {
+      "id": "4.1-q08",
+      "gate": "G1",
+      "message": "two options differ only by punctuation/quoting — confirm they are genuinely distinct answers"
+    },
+    {
+      "id": "4.3-q01",
+      "gate": "G1",
+      "message": "two options differ only by punctuation/quoting — confirm they are genuinely distinct answers"
+    },
+    {
+      "id": "7.1-q05",
+      "gate": "G1",
+      "message": "two options differ only by punctuation/quoting — confirm they are genuinely distinct answers"
+    }
+  ],
+  "executed": [
+    {
+      "id": "1.1-q02",
+      "mode": "run",
+      "result": "pass",
+      "detail": "[2,4,6]"
+    },
+    {
+      "id": "2.1-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "iOS + Android"
+    },
+    {
+      "id": "2.1-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "not Hermes"
+    },
+    {
+      "id": "2.1-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "2.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Hello12"
+    },
+    {
+      "id": "2.1-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "2.2-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "8088"
+    },
+    {
+      "id": "2.2-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "2.2-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "js,ts,tsx,svg"
+    },
+    {
+      "id": "2.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "http://localhost:80811"
+    },
+    {
+      "id": "2.2-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "8081"
+    },
+    {
+      "id": "2.3-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "true"
+    },
+    {
+      "id": "2.3-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "/index, /about, /settings"
+    },
+    {
+      "id": "2.3-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "2.3-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "4"
+    },
+    {
+      "id": "2.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "npx create-expo-app undefined"
+    },
+    {
+      "id": "2.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "2.4-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1"
+    },
+    {
+      "id": "2.4-q06",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "2.4-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "j"
+    },
+    {
+      "id": "2.4-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "2.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "count: 12"
+    },
+    {
+      "id": "2.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "0"
+    },
+    {
+      "id": "3.1-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Ada"
+    },
+    {
+      "id": "3.1-q04",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "3.1-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Hello"
+    },
+    {
+      "id": "3.1-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "hello"
+    },
+    {
+      "id": "3.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "3.2-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "dimmed"
+    },
+    {
+      "id": "3.2-q04",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "3.2-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "2"
+    },
+    {
+      "id": "3.2-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "invalid source: expected {uri}"
+    },
+    {
+      "id": "3.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1"
+    },
+    {
+      "id": "3.3-q02",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1"
+    },
+    {
+      "id": "3.3-q03",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "3.3-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "3"
+    },
+    {
+      "id": "3.3-q06",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "3.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined,undefined"
+    },
+    {
+      "id": "3.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "10000"
+    },
+    {
+      "id": "3.4-q02",
+      "mode": "run",
+      "result": "pass",
+      "detail": "true"
+    },
+    {
+      "id": "3.4-q03",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "3.4-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "spinner"
+    },
+    {
+      "id": "3.4-q06",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "3.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "3.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "false"
+    },
+    {
+      "id": "4.1-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "{\"backgroundColor\":\"white\",\"padding\":20}"
+    },
+    {
+      "id": "4.1-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "4.1-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "backgroundColor"
+    },
+    {
+      "id": "4.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "4.1-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "4.2-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "50"
+    },
+    {
+      "id": "4.2-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "150"
+    },
+    {
+      "id": "4.2-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "320"
+    },
+    {
+      "id": "4.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "0"
+    },
+    {
+      "id": "4.2-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "50"
+    },
+    {
+      "id": "4.3-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "N"
+    },
+    {
+      "id": "4.3-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "100"
+    },
+    {
+      "id": "4.3-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "4.3-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "4.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "false"
+    },
+    {
+      "id": "4.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "4.4-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Tap me!"
+    },
+    {
+      "id": "4.4-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "75"
+    },
+    {
+      "id": "4.4-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "4.4-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "4.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "(not announced)"
+    },
+    {
+      "id": "4.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "wrong role"
+    },
+    {
+      "id": "5.1-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "swipe-right"
+    },
+    {
+      "id": "5.1-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "fling"
+    },
+    {
+      "id": "5.1-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "5.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "true"
+    },
+    {
+      "id": "5.1-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "out-of-bounds"
+    },
+    {
+      "id": "5.2-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Home>Profile"
+    },
+    {
+      "id": "5.2-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Home>Profile"
+    },
+    {
+      "id": "5.2-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "5.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "no-user"
+    },
+    {
+      "id": "5.2-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Login"
+    },
+    {
+      "id": "5.3-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "50"
+    },
+    {
+      "id": "5.3-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "90deg"
+    },
+    {
+      "id": "5.3-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "5.3-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "5.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "false"
+    },
+    {
+      "id": "5.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "150"
+    },
+    {
+      "id": "5.4-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "/react-native|5"
+    },
+    {
+      "id": "5.4-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "techieman:"
+    },
+    {
+      "id": "5.4-q07",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "5.4-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "5.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "link-lost"
+    },
+    {
+      "id": "5.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "react native"
+    },
+    {
+      "id": "6.1-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "https://api.example.com/search?q=techieman&page=2"
+    },
+    {
+      "id": "6.1-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "charged / duplicate skipped"
+    },
+    {
+      "id": "6.1-q05",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "6.1-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "[object Promise]"
+    },
+    {
+      "id": "6.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "[object Object]"
+    },
+    {
+      "id": "6.2-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "0,1,2,3"
+    },
+    {
+      "id": "6.2-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "MO 42"
+    },
+    {
+      "id": "6.2-q05",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "6.2-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "[object Object]"
+    },
+    {
+      "id": "6.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "caught: SyntaxError"
+    },
+    {
+      "id": "6.3-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Basic YWxhZGRpbjpzZWNyZXQxMjM="
+    },
+    {
+      "id": "6.3-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "ask user to log in again | logged in, but not allowed"
+    },
+    {
+      "id": "6.3-q05",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "6.3-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "send credentials cross-origin"
+    },
+    {
+      "id": "6.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Bearerabc123"
+    },
+    {
+      "id": "6.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Basic mia:sunshine1"
+    },
+    {
+      "id": "6.4-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1 request(s) queued"
+    },
+    {
+      "id": "6.4-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1000,2000,4000,8000"
+    },
+    {
+      "id": "6.4-q05",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "6.4-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "createChannel then postNotification"
+    },
+    {
+      "id": "6.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "lost: order never sent"
+    },
+    {
+      "id": "6.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "order-1,order-2,order-1,order-2"
+    },
+    {
+      "id": "7.1-q03",
+      "mode": "run",
+      "result": "pass",
+      "detail": "null"
+    },
+    {
+      "id": "7.1-q04",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Ada"
+    },
+    {
+      "id": "7.1-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "[[\"k1\",\"v1\"],[\"k2\",\"v2\"]]"
+    },
+    {
+      "id": "7.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "null"
+    },
+    {
+      "id": "7.1-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "7.2-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "null"
+    },
+    {
+      "id": "7.2-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "file:///doc/notes.txt :: hello file"
+    },
+    {
+      "id": "7.2-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "dark/16"
+    },
+    {
+      "id": "7.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "false"
+    },
+    {
+      "id": "7.2-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "[[\"accessToken\",\"abc123\"]]"
+    },
+    {
+      "id": "7.3-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1:1"
+    },
+    {
+      "id": "7.3-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "1368"
+    },
+    {
+      "id": "7.3-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "test1:123"
+    },
+    {
+      "id": "7.3-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "3"
+    },
+    {
+      "id": "7.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "SELECT * FROM users WHERE name = '' OR '1'='1'"
+    },
+    {
+      "id": "7.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "threw: cursor not reset - call resetAsync() first"
+    },
+    {
+      "id": "7.4-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "67f3f810a6c6c08900d357b76397e9e2d302be7fc07b99d4c3ba98ed7c244eb4"
+    },
+    {
+      "id": "7.4-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "abc123"
+    },
+    {
+      "id": "7.4-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "false"
+    },
+    {
+      "id": "7.4-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "abc123"
+    },
+    {
+      "id": "7.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "true"
+    },
+    {
+      "id": "7.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "true"
+    },
+    {
+      "id": "8.1-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "pass"
+    },
+    {
+      "id": "8.1-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "2"
+    },
+    {
+      "id": "8.1-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "8.1-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "undefined"
+    },
+    {
+      "id": "8.1-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "snapshot differs"
+    },
+    {
+      "id": "8.2-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "tapped:Login"
+    },
+    {
+      "id": "8.2-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "found after 3 tries"
+    },
+    {
+      "id": "8.2-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "400"
+    },
+    {
+      "id": "8.2-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "not ready yet"
+    },
+    {
+      "id": "8.2-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Cancel"
+    },
+    {
+      "id": "8.3-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "16.67"
+    },
+    {
+      "id": "8.3-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "12"
+    },
+    {
+      "id": "8.3-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "10"
+    },
+    {
+      "id": "8.3-q08",
+      "mode": "compile",
+      "result": "pass",
+      "detail": ""
+    },
+    {
+      "id": "8.3-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "offset wrong by 70"
+    },
+    {
+      "id": "8.3-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "blank area: 9 rows missing"
+    },
+    {
+      "id": "8.4-q05",
+      "mode": "run",
+      "result": "pass",
+      "detail": "4"
+    },
+    {
+      "id": "8.4-q06",
+      "mode": "run",
+      "result": "pass",
+      "detail": "install blocked: downgrade"
+    },
+    {
+      "id": "8.4-q07",
+      "mode": "run",
+      "result": "pass",
+      "detail": "Hermes"
+    },
+    {
+      "id": "8.4-q08",
+      "mode": "run",
+      "result": "pass",
+      "detail": "rejected: over Play limit"
+    },
+    {
+      "id": "8.4-q09",
+      "mode": "run",
+      "result": "pass",
+      "detail": "rejected: versionCode already used"
+    },
+    {
+      "id": "8.4-q10",
+      "mode": "run",
+      "result": "pass",
+      "detail": "android/gradle.properties is tracked: secrets leak"
+    }
+  ],
+  "pass": true
+}

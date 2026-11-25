@@ -7,9 +7,12 @@
 // bank layer filters on status === 'approved' (see storage/bank.ts).
 // The report is imported as JSON (resolveJsonModule is on in the RN
 // tsconfig); if the file is missing, this import fails the suite loudly.
+// It is a COMMITTED snapshot inside the app (app/scripts/ai-pipeline/) —
+// the pipeline writes its live report outside the repo, so refresh this
+// copy whenever the report regenerates, or CI fails on the missing file.
 import { ALL_QUESTIONS, questionsForNode } from '../allQuestions';
 import { NODES } from '../roadmap';
-import report from '../../../../scripts/ai-pipeline/verification-report.json';
+import report from '../../../scripts/ai-pipeline/verification-report.json';
 
 /** Mirror of validate.mjs's stem normalisation (line 64). */
 function normStem(s: string): string {
