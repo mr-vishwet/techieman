@@ -15,6 +15,7 @@ import { ALL_QUESTIONS } from '../data/allQuestions';
 import { initDb } from '../storage/bank';
 import { getGuestId, regenerateGuestId } from '../storage/guest';
 import {
+  applyArcadeXp,
   applyFight,
   dayString,
   emptySnapshot,
@@ -72,6 +73,8 @@ interface GameState {
   snapshot: ProgressionSnapshot | null;
   hydrate: () => Promise<void>;
   finishFight: (nodeId: string, input: Omit<FightInput, 'nodeId'>) => FightSummary;
+  /** Bank arcade XP (new-best-only, pre-computed by the screen). Returns the XP banked. */
+  finishArcadeRun: (xpEarned: number) => number;
   setCurrentNode: (nodeId: string | null) => void;
   currentNodeId: string | null;
 
@@ -238,6 +241,24 @@ export const useGameStore = create<GameState>()((set, get) => {
         });
       }
       return result.summary;
+    },
+
+    finishArcadeRun: (xpEarned: number) => {
+      const nowMs = Date.now();
+      const prev = get().snapshot ?? emptySnapshot(get().userId ?? getGuestId());
+      const result = applyArcadeXp(prev, xpEarned, nowMs);
+      set({ snapshot: result.snapshot, ...derive(result.snapshot, nowMs) });
+      // Fire-and-forget persistence; a failure must never break a run.
+      void persistCommands(result.commands).catch(() => undefined);
+      // Fire-and-forget sync, mirroring finishFight — the users doc carries XP.
+      if (get().firebaseReady || get().authStatus !== 'guest') {
+        set({ syncState: 'syncing' });
+        void afterFightSync(deps()).then(status => {
+          set({ syncState: status === 'synced' ? 'synced' : status === 'queued' ? 'queued' : 'idle' });
+          if (status === 'synced') set({ lastMerge: readLastMerge() });
+        });
+      }
+      return xpEarned;
     },
 
     initAuth: async () => {

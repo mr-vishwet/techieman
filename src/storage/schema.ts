@@ -112,4 +112,9 @@ export const MMKV_KEYS = {
   syncOutbox: 'techieman.syncOutbox.v1',
   /** Last merge report (JSON) — shown in the Account card after a sync. */
   lastMerge: 'techieman.lastMerge',
+  // Arcade Mode (local only — best score + run history, see src/storage/arcade.ts).
+  /** Best arcade score ever (JSON { score, wave, at }). */
+  arcadeBest: 'techieman.arcadeBest',
+  /** Last 10 arcade runs, newest first (JSON array). */
+  arcadeRuns: 'techieman.arcadeRuns.v1',
 } as const;

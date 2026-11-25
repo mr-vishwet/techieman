@@ -10,6 +10,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { RoadmapMapScreen } from './src/screens/RoadmapMapScreen';
 import { FightScreen } from './src/screens/FightScreen';
+import { LevelScreen } from './src/screens/LevelScreen';
+import { ArcadeScreen } from './src/screens/ArcadeScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { LeagueScreen } from './src/screens/LeagueScreen';
 import { useGameStore } from './src/store/useGameStore';
@@ -66,6 +68,16 @@ function App() {
             name="Fight"
             component={FightScreen}
             options={{ title: 'Fight' }}
+          />
+          <Stack.Screen
+            name="Level"
+            component={LevelScreen}
+            options={{ title: 'Live level' }}
+          />
+          <Stack.Screen
+            name="Arcade"
+            component={ArcadeScreen}
+            options={{ title: 'Arcade Mode' }}
           />
           <Stack.Screen
             name="Login"

@@ -3,11 +3,12 @@
 // Guest-first: no login anywhere on this screen. All data comes from the
 // game store, which mirrors the SQLite snapshot.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NODES } from '../data/roadmap';
 import { xpToNextLevel } from '../engine/progression';
+import { loadArcadeBest, type ArcadeBest } from '../storage/arcade';
 import { useGameStore } from '../store/useGameStore';
 import { colors, spacing, typography } from '../theme/tokens';
 import type { RootStackParamList } from '../navigation/types';
@@ -48,6 +49,12 @@ export function HomeScreen({ navigation }: Props) {
   const syncState = useGameStore(s => s.syncState);
   const lastMerge = useGameStore(s => s.lastMerge);
   const deleteAccount = useGameStore(s => s.deleteAccount);
+  // Arcade best score — refreshes when Home regains focus (a run just ended).
+  const [arcadeBest, setArcadeBest] = useState<ArcadeBest | null>(() => loadArcadeBest());
+  useEffect(
+    () => navigation.addListener('focus', () => setArcadeBest(loadArcadeBest())),
+    [navigation],
+  );
 
   if (!hydrated) {
     return (
@@ -104,6 +111,20 @@ export function HomeScreen({ navigation }: Props) {
           </Text>
         </View>
       )}
+
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>🕹️ Arcade Mode</Text>
+        <Text style={styles.body}>
+          {arcadeBest
+            ? `Endless waves, 3 lives. Best so far: ${arcadeBest.score.toLocaleString()} · wave ${arcadeBest.wave}.`
+            : 'Endless waves, 3 lives, beat your best. No runs yet — first run sets the score to beat.'}
+        </Text>
+        <Pressable
+          style={styles.primaryButton}
+          onPress={() => navigation.navigate('Arcade')}>
+          <Text style={styles.buttonText}>Play Arcade</Text>
+        </Pressable>
+      </View>
 
       <Text style={styles.sectionTitle}>Today&apos;s quests</Text>
       <FlatList

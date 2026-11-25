@@ -3,6 +3,7 @@
 // advancing the clock — no native modules, no clock mocking.
 // Scenario: earn XP → streak kept → wrong tags surface a rematch.
 import {
+  applyArcadeXp,
   applyFight,
   dayString,
   emptySnapshot,
@@ -168,5 +169,42 @@ describe('applyFight: daily quest rollover', () => {
     expect(fast?.progress).toBe(0);
     expect(fast?.done).toBe(false);
     expect(day2.questDay).toBe(dayString(DAY1 + DAY));
+  });
+});
+
+describe('applyArcadeXp: arcade runs bank XP without touching quests or nodes', () => {
+  it('banks the XP, bumps the level, starts the streak, and leaves quests/nodes alone', () => {
+    const snap = emptySnapshot('guest-test');
+    const { snapshot, commands } = applyArcadeXp(snap, 12, DAY1);
+    expect(snapshot.xp).toBe(12);
+    expect(snapshot.level).toBe(1); // 12 XP is still level 1
+    expect(snapshot.streak).toBe(1);
+    expect(snapshot.lastPlayedDay).toBe(dayString(DAY1));
+    expect(snapshot.quests).toEqual([]);
+    expect(snapshot.progress).toEqual({});
+    const sqls = commands.map(c => c.sql);
+    expect(sqls.some(s => s.includes('INSERT OR IGNORE INTO users'))).toBe(true);
+    expect(sqls.some(s => s.includes('UPDATE users SET xp'))).toBe(true);
+    expect(sqls.some(s => s.includes('INSERT INTO fights'))).toBe(false);
+    expect(sqls.some(s => s.includes('quests'))).toBe(false);
+  });
+
+  it('levels up at 100 XP and never pays negative XP', () => {
+    const snap = emptySnapshot('guest-test');
+    snap.xp = 95;
+    const { snapshot } = applyArcadeXp(snap, 25, DAY1);
+    expect(snapshot.xp).toBe(120);
+    expect(snapshot.level).toBe(2);
+    const zero = applyArcadeXp(emptySnapshot('guest-test'), -5, DAY1).snapshot;
+    expect(zero.xp).toBe(0);
+  });
+
+  it('a same-day arcade run keeps the streak; a next-day run grows it', () => {
+    const day1 = applyArcadeXp(emptySnapshot('guest-test'), 5, DAY1).snapshot;
+    expect(day1.streak).toBe(1);
+    const sameDay = applyArcadeXp(day1, 5, DAY1 + 60_000).snapshot;
+    expect(sameDay.streak).toBe(1);
+    const nextDay = applyArcadeXp(day1, 5, DAY1 + DAY).snapshot;
+    expect(nextDay.streak).toBe(2);
   });
 });

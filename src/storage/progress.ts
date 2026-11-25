@@ -255,6 +255,58 @@ export function applyFight(
   };
 }
 
+/**
+ * Pure core of Arcade XP: apply one finished arcade run to a snapshot.
+ * Arcade XP is new-best-only (computed by arcadeXpForRun before this is
+ * called) and capped at 25/run, so arcade can never farm XP. An arcade run
+ * counts as a played day for the streak, same as a fight — but it never
+ * touches quests and never clears nodes (quests and roadmap progress stay
+ * campaign-only by design). Returns the new snapshot + the SQL that
+ * persists it (the caller executes it, as with applyFight).
+ */
+export interface ApplyArcadeXpResult {
+  snapshot: ProgressionSnapshot;
+  commands: SqlCommand[];
+}
+
+export function applyArcadeXp(
+  snapshot: ProgressionSnapshot,
+  xpEarned: number,
+  nowMs: number,
+): ApplyArcadeXpResult {
+  const today = dayString(nowMs);
+  const streakBefore = snapshot.streak;
+  const streakRes = updateStreak(
+    { lastPlayedDay: snapshot.lastPlayedDay, streak: snapshot.streak, freezes: snapshot.streakFreeze },
+    today,
+  );
+  const streakFreeze = maybeEarnFreeze(streakBefore, streakRes.streak, streakRes.freezes);
+  const newXp = snapshot.xp + Math.max(0, xpEarned);
+  const next: ProgressionSnapshot = {
+    ...snapshot,
+    xp: newXp,
+    level: levelForXp(newXp),
+    streak: streakRes.streak,
+    streakFreeze,
+    lastPlayedDay: today,
+  };
+  return {
+    snapshot: next,
+    commands: [
+      // First action may be an arcade run (no users row yet): create it,
+      // mirroring applyFight — otherwise the UPDATE below affects 0 rows.
+      {
+        sql: `INSERT OR IGNORE INTO users (id, display_name, avatar_skin, xp, level, gems, streak, streak_freeze, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        params: [snapshot.userId, null, 'crimson', 0, 1, 0, 0, 0, nowMs],
+      },
+      {
+        sql: `UPDATE users SET xp = ?, level = ?, streak = ?, streak_freeze = ? WHERE id = ?`,
+        params: [next.xp, next.level, next.streak, next.streakFreeze, snapshot.userId],
+      },
+    ],
+  };
+}
+
 /** Highest-value due rematch in a snapshot (null when nothing is due). */
 export function snapshotRematch(snapshot: ProgressionSnapshot, nowMs: number): ProgressRow | null {
   return pickRematch(Object.values(snapshot.progress), nowMs);

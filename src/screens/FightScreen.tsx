@@ -1,6 +1,10 @@
-// TechieMan — Fight screen (M2 spike, M3 bank wiring, M4 progression shell).
+// TechieMan — Fight screen (M2 spike, M3 bank wiring, M4 progression shell,
+// graphics/villain rebuild 26 Nov 2026: the villain is the language itself).
 // Wires the Skia fight canvas + pure-TS fight math + the Chapter 1 question
 // bank (seeded SQLite, TS-array fallback) + the Reanimated FPS meter.
+// The canvas is driven by beats (choreography.ts): the screen sets a beat on
+// each answer and clears it after BEAT_DURATION_MS; terminal ko/win poses
+// persist after the beat ends, and the result card waits for the beat.
 // Question/HP state lives in React; per-frame animation lives on the UI
 // thread (Skia values + Reanimated). Finished fights are recorded once
 // into the store (XP, streak, quests, rematch tags) via finishFight.
@@ -19,7 +23,9 @@ import { NODES } from '../data/roadmap';
 import type { Question } from '../data/questions';
 import { loadQuestionsForNode, questionsForNodeLocal } from '../storage/bank';
 import { applyAnswer, newFight, type FightState } from '../engine/fightMath';
-import { FightCanvas, type FighterPose } from '../components/FightCanvas';
+import { BEAT_DURATION_MS, moveForAnswer, type Beat } from '../engine/choreography';
+import { enemyForNode, type EnemyDesign } from '../data/enemies';
+import { FightCanvas } from '../components/FightCanvas';
 import { useFpsMeter, type FpsSample } from '../components/FpsMeter';
 import { colors, spacing, typography } from '../theme/tokens';
 import { useGameStore } from '../store/useGameStore';
@@ -64,8 +70,18 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
   const [qIndex, setQIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [why, setWhy] = useState<string | null>(null);
-  const [pose, setPose] = useState<FighterPose>('idle');
+  // Graphics rebuild (26 Nov 2026): the canvas is driven by beats, not a
+  // single pose. beat = the move playing; playerPose/enemyPose = the states
+  // that persist after the beat ends (ko/win) or during it (hurt).
+  const [beat, setBeat] = useState<Beat | null>(null);
+  const [beatKey, setBeatKey] = useState(0);
+  const [playerPose, setPlayerPose] = useState<'idle' | 'hurt' | 'ko' | 'win'>('idle');
+  const [enemyPose, setEnemyPose] = useState<'idle' | 'hurt' | 'ko'>('idle');
+  const [damageEvent, setDamageEvent] = useState<{ key: number; value: number; kind: 'dealt' | 'taken' } | null>(null);
   const [burstKey, setBurstKey] = useState(0);
+  const [introKey, setIntroKey] = useState(0);
+  const [showIntro, setShowIntro] = useState(true);
+  const [resultReady, setResultReady] = useState(false);
   const [timeLeft, setTimeLeft] = useState(QUESTION_SECONDS);
   const [fps, setFps] = useState<FpsSample | null>(null);
   const [demoMode, setDemoMode] = useState(false);
@@ -80,6 +96,11 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
   const question = activeQuestions[qIndex];
   const finished = fight.enemy.hp <= 0 || fight.player.hp <= 0;
   const won = fight.enemy.hp <= 0;
+
+  // The enemy is the language itself (plan §1.5): the played node's design.
+  // Demo mode always plays node 1.1's questions, so it fights 1.1's enemy.
+  const playedNodeId = demoMode ? '1.1-js-basics' : nodeId;
+  const enemy: EnemyDesign | undefined = enemyForNode(playedNodeId);
 
   const playerHpWidth = useSharedValue(100);
   const enemyHpWidth = useSharedValue(100);
@@ -97,9 +118,35 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
   const onFpsSample = useCallback((s: FpsSample) => setFps(s), []);
   useFpsMeter(onFpsSample);
 
+  // VS splash + enemy walk-in whenever a fight (re)starts: node change, demo
+  // toggle, or the question bank finishing loading. Also resets the fight —
+  // navigating to the same screen with a different node must not carry the
+  // old fight over (previously the stale fight persisted silently).
+  useEffect(() => {
+    setShowIntro(true);
+    setIntroKey(k => k + 1);
+    setFight(newFight(node?.difficulty ?? 1));
+    setQIndex(0);
+    setSelected(null);
+    setWhy(null);
+    setBeat(null);
+    setDamageEvent(null);
+    setPlayerPose('idle');
+    setEnemyPose('idle');
+    setResultReady(false);
+    wrongQuestionIds.current = [];
+    fastAnswers.current = 0;
+    fightStartedAt.current = Date.now();
+    recordedRef.current = false;
+    setXpEarned(null);
+    const t = setTimeout(() => setShowIntro(false), 1200);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodeId, demoMode, bankQuestions]);
+
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => {
-    if (finished || selected !== null) return;
+    if (finished || selected !== null || showIntro) return;
     setTimeLeft(QUESTION_SECONDS);
     timerRef.current = setInterval(() => {
       setTimeLeft(t => {
@@ -113,7 +160,7 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [qIndex, finished, selected, demoMode]);
+  }, [qIndex, finished, selected, demoMode, showIntro]);
 
   // Timeout counts as a wrong answer.
   useEffect(() => {
@@ -148,40 +195,60 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
     const result = applyAnswer(fight, correct, secondsUsed);
     setFight(result.state);
     setWhy(question.explanation);
-    setPose(correct ? 'attack' : 'hurt');
+    // The beat is the move: speed + combo pick it (choreography.ts), and the
+    // canvas plays wind-up → strike → impact → stagger for its duration.
+    const kind = moveForAnswer(correct, secondsUsed, fight.combo, false);
+    const key = beatKey + 1;
+    setBeatKey(key);
+    setBeat({ kind, key });
+    setDamageEvent({
+      key,
+      value: correct ? result.damageDealt : result.damageTaken,
+      kind: correct ? 'dealt' : 'taken',
+    });
     if (correct) {
+      setEnemyPose('hurt');
       setBurstKey(k => k + 1);
       if (secondsUsed < 8) fastAnswers.current += 1;
     } else {
       wrongQuestionIds.current.push(question.id);
+      setPlayerPose('hurt');
       shake();
     }
     setTimeout(() => {
-      setPose('idle');
-      setSelected(null);
-      setWhy(null);
+      setBeat(null);
       if (result.outcome === 'ongoing') {
+        setEnemyPose('idle');
+        setPlayerPose('idle');
+        setSelected(null);
+        setWhy(null);
         setQIndex(i => (i + 1) % activeQuestions.length);
-      } else if (!recordedRef.current) {
-        // Terminal outcome (win OR lose): record once into the M4 shell.
-        // A loss still counts as a played day and banks the wrong tags.
-        recordedRef.current = true;
-        const summary = finishFight(nodeId, {
-          won: result.outcome === 'win',
-          correctCount: result.state.correctCount,
-          wrongCount: result.state.wrongCount,
-          bestCombo: result.state.bestCombo,
-          totalQuestions: activeQuestions.length,
-          flawless: result.flawless,
-          isBoss: false,
-          wrongTags: wrongQuestionIds.current,
-          fastAnswers: fastAnswers.current,
-          durationMs: Date.now() - fightStartedAt.current,
-          startedAt: fightStartedAt.current,
-        });
-        setXpEarned(summary.xpEarned);
+      } else {
+        // Terminal: the KO/victory beat lands first, then the result card.
+        setEnemyPose(result.outcome === 'win' ? 'ko' : 'idle');
+        setPlayerPose(result.outcome === 'win' ? 'win' : 'ko');
+        setResultReady(true);
+        if (!recordedRef.current) {
+          // Terminal outcome (win OR lose): record once into the M4 shell.
+          // A loss still counts as a played day and banks the wrong tags.
+          recordedRef.current = true;
+          const summary = finishFight(nodeId, {
+            won: result.outcome === 'win',
+            correctCount: result.state.correctCount,
+            wrongCount: result.state.wrongCount,
+            bestCombo: result.state.bestCombo,
+            totalQuestions: activeQuestions.length,
+            flawless: result.flawless,
+            isBoss: false,
+            wrongTags: wrongQuestionIds.current,
+            fastAnswers: fastAnswers.current,
+            durationMs: Date.now() - fightStartedAt.current,
+            startedAt: fightStartedAt.current,
+          });
+          setXpEarned(summary.xpEarned);
+        }
       }
-    }, 1100);
+    }, BEAT_DURATION_MS[kind]);
   }
 
   if (!node) {
@@ -233,6 +300,24 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
     );
   }
 
+  // No enemy design for the played node — the fight cannot start without a
+  // villain that is the language itself (plan §1.5). All 32 nodes have
+  // designs (enemies.test.ts), so this is unreachable in practice.
+  if (!enemy) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>{node.title}</Text>
+        <Text style={styles.body}>
+          No enemy design exists for this node yet — the fight cannot start
+          without a villain that is the language itself.
+        </Text>
+        <Pressable style={styles.secondaryButton} onPress={() => navigation.goBack()}>
+          <Text style={styles.buttonText}>Back to roadmap</Text>
+        </Pressable>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -252,24 +337,46 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
           </View>
         </View>
         <View style={styles.hpBlock}>
-          <Text style={styles.hpLabel}>THE `?` GOBLIN · {fight.enemy.hp}</Text>
+          <Text style={styles.hpLabel}>
+            {enemy.name.toUpperCase()} · {enemy.language.toUpperCase()} · {fight.enemy.hp}
+          </Text>
           <View style={styles.hpTrack}>
-            <Animated.View style={[styles.hpFill, styles.hpEnemy, enemyBarStyle]} />
+            <Animated.View
+              style={[styles.hpFill, { backgroundColor: enemy.accent }, enemyBarStyle]}
+            />
           </View>
         </View>
       </View>
 
-      <Animated.View style={shakeStyle}>
-        <FightCanvas
-          width={width}
-          height={canvasHeight}
-          pose={pose}
-          enemyPose={fight.enemy.hp <= 0 ? 'ko' : 'idle'}
-          burstKey={burstKey}
-        />
-      </Animated.View>
+      <View style={styles.stageWrap}>
+        <Animated.View style={shakeStyle}>
+          <FightCanvas
+            width={width}
+            height={canvasHeight}
+            enemy={enemy}
+            beat={beat}
+            playerPose={playerPose}
+            enemyPose={enemyPose}
+            damageEvent={damageEvent}
+            burstKey={burstKey}
+            introKey={introKey}
+          />
+        </Animated.View>
+        {showIntro ? (
+          <Pressable style={styles.vsSplash} onPress={() => setShowIntro(false)}>
+            <Text style={styles.vsYou}>YOU</Text>
+            <Text style={styles.vsText}>VS</Text>
+            <Text style={[styles.vsEnemy, { color: enemy.accent }]}>{enemy.name.toUpperCase()}</Text>
+            <Text style={styles.vsLang}>
+              {enemy.language} — beat it, and the language is yours
+            </Text>
+            <Text style={styles.vsTagline}>{enemy.tagline}</Text>
+            <Text style={styles.vsSkip}>tap to skip</Text>
+          </Pressable>
+        ) : null}
+      </View>
 
-      {finished ? (
+      {finished && resultReady ? (
         <View style={styles.resultCard}>
           <Text style={styles.title}>{won ? 'NODE CLEARED' : 'KNOCKED OUT'}</Text>
           <Text style={styles.body}>
@@ -288,6 +395,13 @@ export function FightScreen({ route, navigation }: FightScreenProps) {
               setQIndex(0);
               setSelected(null);
               setWhy(null);
+              setBeat(null);
+              setDamageEvent(null);
+              setPlayerPose('idle');
+              setEnemyPose('idle');
+              setResultReady(false);
+              setShowIntro(true);
+              setIntroKey(k => k + 1);
             }}>
             <Text style={styles.buttonText}>{won ? 'Fight again' : 'Rematch'}</Text>
           </Pressable>
@@ -338,6 +452,21 @@ const styles = StyleSheet.create({
   hpFill: { height: '100%', borderRadius: 5 },
   hpPlayer: { backgroundColor: colors.hpPlayer },
   hpEnemy: { backgroundColor: colors.hpEnemy },
+  stageWrap: { position: 'relative' },
+  vsSplash: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(20, 5, 9, 0.92)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16,
+    padding: spacing.md,
+  },
+  vsYou: { ...typography.title, color: colors.crimson },
+  vsText: { ...typography.caption, color: colors.creamDim, marginVertical: 4 },
+  vsEnemy: { ...typography.title, textAlign: 'center' },
+  vsLang: { ...typography.caption, color: colors.cream, marginTop: 8, textAlign: 'center' },
+  vsTagline: { ...typography.caption, color: colors.gold, marginTop: 4, textAlign: 'center' },
+  vsSkip: { ...typography.caption, color: colors.creamDim, marginTop: 16 },
   questionCard: {
     backgroundColor: colors.voidCard,
     borderRadius: 16,
