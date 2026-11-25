@@ -1,0 +1,346 @@
+// TechieMan — Chapter 1, batch B (M3): nodes 1.3-jsx (q02–q10) and
+// 1.4-components-state-props (q03–q10). 17 questions. See questions.ts for
+// the Question type; this file only adds QUESTIONS_CH1B.
+//
+// VERIFICATION LOG (2026-11-25, author session)
+// Sources fetched with browser.open (verbatim quotes copied from the pages):
+// - https://react.dev/learn/writing-markup-with-jsx (1.3-q02, q04, q08)
+// - https://react.dev/learn/conditional-rendering (1.3-q03)
+// - https://reactnative.dev/docs/intro-react (1.3-q05)
+// - https://react.dev/learn/javascript-in-jsx-with-curly-braces (1.3-q06, q07, q10)
+// - https://react.dev/learn/rendering-lists (1.3-q09)
+// - https://react.dev/reference/react/useState (1.4-q03, q05, q07)
+// - https://react.dev/learn/passing-props-to-a-component (1.4-q04, q06, q08)
+// - https://react.dev/learn/sharing-state-between-components (1.4-q09)
+// - https://reactnative.dev/docs/handling-text-input (1.4-q10)
+//
+// Node executions (all run, exit 0):
+//   node -e "console.log('q03-AND-zero:', 0 && 'New messages'); console.log('q03-AND-true:', true && 'New messages'); console.log('q06-expr:', 5*3); const age=42; const stale=[age+1,age+1,age+1]; console.log('q03-stale-triple-setAge(age+1):', stale[stale.length-1]); let a=42; [1,1,1].forEach(()=>{a=a+1}); console.log('q03-updater-triple-setAge(a=>a+1):', a); let name='Taylor'; const setName=v=>{}; setName('Robin'); console.log('q07-log-after-setName:', name); function f({size=100}={}){return size} console.log('q06-default-missing:', f({}), 'undefined:', f({size:undefined}), 'null:', f({size:null}), 'zero:', f({size:0})); const form={firstName:'Barbara'}; const ref=form; form.firstName='Taylor'; console.log('q05-mutate-same-ref:', form===ref, 'Object.is:', Object.is(form,ref)); console.log('q06-double-curlies-keys:', Object.keys({backgroundColor:'black'})); console.log('q03-ternary:', true ? 'Hi' : 'Bye');"
+// Output:
+//   q03-AND-zero: 0
+//   q03-AND-true: New messages
+//   q06-expr: 15
+//   q03-stale-triple-setAge(age+1): 43
+//   q03-updater-triple-setAge(a=>a+1): 45
+//   q07-log-after-setName: Taylor
+//   q06-default-missing: 100 undefined: 100 null: null zero: 0
+//   q05-mutate-same-ref: true Object.is: true
+//   q06-double-curlies-keys: [ 'backgroundColor' ]
+//   q03-ternary: Hi
+// Per-question mapping: 1.3-q03 (code) <- q03-AND-zero = 0; 1.3-q06 (code) <- q06-expr = 15;
+// 1.4-q03 (code) <- stale 43 vs updater 45; 1.4-q06 (code) <- default 100 / null null / zero 0;
+// 1.4-q07 (code) <- log still Taylor; 1.4-q05 (bug) <- mutate keeps same ref (Object.is true), so
+// React sees no new state. All other questions verified against the fetched source pages above.
+// Nothing in this file was left unverified: 17/17 verified true, 0 draft.
+
+import type { Question } from './questions';
+
+export const QUESTIONS_CH1B: Question[] = [
+  // ---- Node 1.3-jsx ----
+  {
+    id: '1.3-q02',
+    nodeId: '1.3-jsx',
+    type: 'mcq',
+    stem: 'A component tries to return two sibling elements with no wrapper: return (<Text>One</Text><Text>Two</Text>); What must change?',
+    options: [
+      'Nothing — JSX allows several root elements',
+      'Put each element in its own component file',
+      'Wrap them in a single parent tag, like <View> or a fragment <> </>',
+      'Join them with a + sign, like strings',
+    ],
+    correctIndex: 2,
+    explanation: 'JSX returns one root element, so siblings need one parent tag or a fragment around them.',
+    sourceUrl: 'https://react.dev/learn/writing-markup-with-jsx',
+    sourceQuote: 'To return multiple elements from a component, wrap them with a single parent tag.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q03',
+    nodeId: '1.3-jsx',
+    type: 'code',
+    stem: 'What does this render? const messageCount = 0; return <Text>{messageCount && "New messages"}</Text>;',
+    options: ['Nothing at all', '0', '"New messages"', 'false'],
+    correctIndex: 1,
+    explanation: 'With 0 on the left of &&, the whole expression is 0 — and React renders 0 instead of nothing.',
+    sourceUrl: 'https://react.dev/learn/conditional-rendering',
+    sourceQuote: 'if the left side is `0`, then the whole expression gets that value (`0`), and React will happily render `0` rather than nothing.',
+    difficulty: 3,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q04',
+    nodeId: '1.3-jsx',
+    type: 'mcq',
+    stem: 'Which of these is valid JSX for an image with no children?',
+    options: ['<Image source={pic} />', '<Image source={pic}>', '<Image source={pic} /> </Image>', '<Image source={pic} / >'],
+    correctIndex: 0,
+    explanation: 'Every JSX tag must be closed — a tag with no children closes itself with />.',
+    sourceUrl: 'https://react.dev/learn/writing-markup-with-jsx',
+    sourceQuote: 'JSX requires tags to be explicitly closed: self-closing tags like `<img>` must become `<img />`, and wrapping tags like `<li>oranges` must be written as `<li>oranges</li>`.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q05',
+    nodeId: '1.3-jsx',
+    type: 'mcq',
+    stem: 'In React Native, which prop fires when the user taps a Button?',
+    options: ['onClick', 'onTap', 'onTouchStart', 'onPress'],
+    correctIndex: 3,
+    explanation: 'React Native buttons use onPress — onClick is a web DOM event and does not exist in React Native.',
+    sourceUrl: 'https://reactnative.dev/docs/intro-react',
+    sourceQuote: 'Next you add the Button Core Component and give it an `onPress` prop',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q06',
+    nodeId: '1.3-jsx',
+    type: 'code',
+    stem: 'What renders here? const price = 5; const qty = 3; return <Text>Total: {price * qty}</Text>;',
+    options: ['Total: 53', 'Total: 5 * 3', 'Total: 15', 'A compile error, because math is not allowed in braces'],
+    correctIndex: 2,
+    explanation: 'Braces run any JavaScript expression, so price * qty is calculated to 15 before it renders.',
+    sourceUrl: 'https://react.dev/learn/javascript-in-jsx-with-curly-braces',
+    sourceQuote: 'Any JavaScript expression will work between curly braces, including function calls like `formatDate()`',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q07',
+    nodeId: '1.3-jsx',
+    type: 'bug',
+    stem: 'Spot the bug: <Image source="{avatar}" /> renders a broken image, even though the variable avatar holds the right value. What is wrong?',
+    options: [
+      'The variable must be renamed to src',
+      'The braces are inside quotes, so JSX passes the literal string "{avatar}" instead of the variable',
+      'Image needs a closing </Image> tag to load',
+      'Variables cannot be used in attributes at all',
+    ],
+    correctIndex: 1,
+    explanation: 'Quotes make it a plain string — drop the quotes and write source={avatar} to read the variable.',
+    sourceUrl: 'https://react.dev/learn/javascript-in-jsx-with-curly-braces',
+    sourceQuote: 'As attributes immediately following the `=` sign: `src={avatar}` will read the `avatar` variable, but `src="{avatar}"` will pass the string `"{avatar}"`.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q08',
+    nodeId: '1.3-jsx',
+    type: 'mcq',
+    stem: 'Why would you wrap sibling elements in <> </> instead of a <View>?',
+    options: [
+      'Fragments render faster because they skip the JavaScript thread',
+      'Fragments let you group elements without adding an extra wrapper element',
+      'Fragments are required for any component with state',
+      'A <View> cannot hold more than one child',
+    ],
+    correctIndex: 1,
+    explanation: 'A fragment groups children with no extra wrapper element in the tree.',
+    sourceUrl: 'https://react.dev/learn/writing-markup-with-jsx',
+    sourceQuote: 'Fragments let you group things without leaving any trace in the browser HTML tree.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q09',
+    nodeId: '1.3-jsx',
+    type: 'bug',
+    stem: 'Spot the bug: const list = people.map(person => <Text>{person.name}</Text>); The list renders, but the console shows a warning. What fixes it?',
+    options: [
+      'Give each item a stable key: <Text key={person.id}>',
+      'Use the array index as the key: <Text key={index}>',
+      'Wrap the list in a fragment <> </>',
+      'Pass the id as a normal prop: <Text id={person.id}>',
+    ],
+    correctIndex: 0,
+    explanation: 'Every element made inside map needs a unique, stable key so React can track it when the list changes.',
+    sourceUrl: 'https://react.dev/learn/rendering-lists',
+    sourceQuote: 'Warning: Each child in a list should have a unique “key” prop.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.3-q10',
+    nodeId: '1.3-jsx',
+    type: 'bug',
+    stem: 'Spot the bug: const person = { name: "Ada", age: 36 }; return <Text>{person}</Text>; The app crashes. What is the fix?',
+    options: [
+      'Wrap it in more braces: {{person}}',
+      'Convert it to a string: {JSON.stringify(person)}',
+      'Render one field instead of the whole object: {person.name}',
+      'Move the object outside the component',
+    ],
+    correctIndex: 2,
+    explanation: 'JSX cannot render a plain object as a child — render a string or number field like person.name instead.',
+    sourceUrl: 'https://react.dev/learn/javascript-in-jsx-with-curly-braces',
+    sourceQuote: 'This code crashes with an error saying `Objects are not valid as a React child`',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  // ---- Node 1.4-components-state-props ----
+  {
+    id: '1.4-q03',
+    nodeId: '1.4-components-state-props',
+    type: 'code',
+    stem: 'age starts at 42. A tap handler runs setAge(a => a + 1) three times in a row. What is age after the re-render?',
+    options: ['42', '45', '43', '126'],
+    correctIndex: 1,
+    explanation: 'The updater function reads the pending state each time, so 42 becomes 43, then 44, then 45.',
+    sourceUrl: 'https://react.dev/reference/react/useState',
+    sourceQuote: 'However, after one click, `age` will only be `43` rather than `45`! This is because calling the `set` function does not update the `age` state variable in the already running code.',
+    difficulty: 3,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q04',
+    nodeId: '1.4-components-state-props',
+    type: 'mcq',
+    stem: 'Inside a child component, the code does props.name = "New"; to rename a user. What should happen instead?',
+    options: [
+      'It works — props are normal variables the child owns',
+      'It works, but only if the parent re-renders first',
+      'It must not change props — the child asks the parent (for example with a callback prop) to pass different props',
+      'It throws a compile error, because props is a reserved word',
+    ],
+    correctIndex: 2,
+    explanation: 'Props are read-only snapshots from the parent — a child never edits them, it asks the parent for new ones.',
+    sourceUrl: 'https://react.dev/learn/passing-props-to-a-component',
+    sourceQuote: 'However, props are immutable—a term from computer science meaning “unchangeable”.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q05',
+    nodeId: '1.4-components-state-props',
+    type: 'bug',
+    stem: 'Spot the bug: const [form, setForm] = useState({ firstName: "Barbara" }); A handler does form.firstName = "Taylor"; but the screen never updates. What is the fix?',
+    options: [
+      'Replace the whole state object: setForm({ ...form, firstName: "Taylor" })',
+      'Call setForm(form) after mutating it',
+      'Rename firstName to first_name',
+      'Move useState outside the component',
+    ],
+    correctIndex: 0,
+    explanation: 'Mutating state keeps the same object reference, so React sees no change — replace it with a new object.',
+    sourceUrl: 'https://react.dev/reference/react/useState',
+    sourceQuote: 'In React, state is considered read-only, so **you should *replace* it rather than *mutate* your existing objects**.',
+    difficulty: 3,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q06',
+    nodeId: '1.4-components-state-props',
+    type: 'code',
+    stem: 'function Avatar({ size = 100 }) { return size; } What does <Avatar size={0} /> render?',
+    options: ['100', '0', 'undefined', 'A crash, because 0 is not a valid size'],
+    correctIndex: 1,
+    explanation: 'The default only kicks in when the prop is missing or undefined — 0 is a real value, so it stays 0.',
+    sourceUrl: 'https://react.dev/learn/passing-props-to-a-component',
+    sourceQuote: 'The default value is only used if the `size` prop is missing or if you pass `size={undefined}`. But if you pass `size={null}` or `size={0}`, the default value will **not** be used.',
+    difficulty: 3,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q07',
+    nodeId: '1.4-components-state-props',
+    type: 'code',
+    stem: 'What is logged? const [name, setName] = useState("Taylor"); function handleClick() { setName("Robin"); console.log(name); }',
+    options: ['"Robin"', '"Taylor"', 'undefined', 'Nothing — console.log is blocked inside handlers'],
+    correctIndex: 1,
+    explanation: 'The setter only changes state for the next render — the name in the running code is still the old one.',
+    sourceUrl: 'https://react.dev/reference/react/useState',
+    sourceQuote: 'Calling the `set` function does not change the current state in the already executing code',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q08',
+    nodeId: '1.4-components-state-props',
+    type: 'mcq',
+    stem: 'How does a Card component get hold of the <Avatar /> nested inside <Card><Avatar /></Card>?',
+    options: [
+      'Through a prop called children: function Card({ children })',
+      'Through a prop called nested, set automatically',
+      'It cannot — only built-in tags like View can nest children',
+      'By importing Avatar inside Card',
+    ],
+    correctIndex: 0,
+    explanation: 'Anything nested inside a JSX tag arrives in the parent as the children prop.',
+    sourceUrl: 'https://react.dev/learn/passing-props-to-a-component',
+    sourceQuote: 'When you nest content inside a JSX tag, the parent component will receive that content in a prop called `children`.',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q09',
+    nodeId: '1.4-components-state-props',
+    type: 'mcq',
+    stem: 'Two Panel components each own their own isActive state, so both can be open at once. The design needs only one open at a time. What is the right move?',
+    options: [
+      'Give both panels the same isActive variable name',
+      'Copy the state into both panels so they match',
+      'Lift the state up: move it to their closest common parent and pass it down as props',
+      'Delete the state and hard-code one panel open',
+    ],
+    correctIndex: 2,
+    explanation: 'Shared state lives in the closest common parent, which passes it down so both children stay in sync.',
+    sourceUrl: 'https://react.dev/learn/sharing-state-between-components',
+    sourceQuote: 'Sometimes, you want the state of two components to always change together. To do it, remove state from both of them, move it to their closest common parent, and then pass it down to them via props. This is known as *lifting state up,*',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+  {
+    id: '1.4-q10',
+    nodeId: '1.4-components-state-props',
+    type: 'bug',
+    stem: 'Spot the bug: const [text, setText] = useState(""); return <TextInput value={text} />; The user types, but nothing appears in the box. What fixes it?',
+    options: [
+      'Add placeholder="Type here"',
+      'Add onChangeText={setText} so typing updates the state that value reads',
+      'Replace value with defaultValue and keep everything else',
+      'Add editable={true}, because inputs are read-only by default',
+    ],
+    correctIndex: 1,
+    explanation: 'With value set but no onChangeText, the text is frozen — every keystroke must flow back into state.',
+    sourceUrl: 'https://reactnative.dev/docs/handling-text-input',
+    sourceQuote: 'It has an `onChangeText` prop that takes a function to be called every time the text changed',
+    difficulty: 2,
+    sdkVersion: 'RN 0.88',
+    verified: true,
+    status: 'approved',
+  },
+];

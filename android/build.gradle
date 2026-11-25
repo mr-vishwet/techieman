@@ -1,0 +1,27 @@
+buildscript {
+    ext {
+        buildToolsVersion = "37.0.0"
+        minSdkVersion = 24
+        // 37 does not exist on dl.google.com yet (404, verified 26 Nov 2026) —
+        // the highest published platform is android-36. compileSdk 36 matches
+        // targetSdk 36; revisit when Google publishes API 37.
+        compileSdkVersion = 36
+        targetSdkVersion = 36
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.2.0"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        // M5: Firebase — google-services plugin reads android/app/google-services.json.
+        // The file is a PLACEHOLDER until Vishwet adds the real one (see FIREBASE_SETUP.md).
+        classpath("com.google.gms:google-services:4.4.2")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"
