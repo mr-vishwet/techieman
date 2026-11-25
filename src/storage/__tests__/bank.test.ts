@@ -59,15 +59,15 @@ describe('buildSeedCommands', () => {
   });
 });
 
-describe('buildSeedCommands with the full M3 bank', () => {
-  it('seeds all 40 Chapter 1 questions, 10 per node', () => {
+describe('buildSeedCommands with the full bank (M3 Ch1 + M6 Ch2–8)', () => {
+  it('seeds all 320 questions, 10 per node across all 32 nodes', () => {
     const cmds = buildSeedCommands(ALL_QUESTIONS);
-    expect(cmds.filter(c => c.sql === INSERT_QUESTION_SQL)).toHaveLength(40);
+    expect(cmds.filter(c => c.sql === INSERT_QUESTION_SQL)).toHaveLength(320);
     const seeded = cmds
       .filter(c => c.sql === INSERT_QUESTION_SQL)
       .map(c => String(c.params?.[1]));
-    for (const nodeId of ['1.1-js-basics', '1.2-css-basics', '1.3-jsx', '1.4-components-state-props']) {
-      expect(seeded.filter(n => n === nodeId)).toHaveLength(10);
+    for (const node of NODES) {
+      expect(seeded.filter(n => n === node.id)).toHaveLength(10);
     }
   });
   it('seeding twice produces identical commands (idempotent re-seed)', () => {
@@ -76,9 +76,9 @@ describe('buildSeedCommands with the full M3 bank', () => {
 });
 
 describe('questionsForNodeLocal (TS-array fallback)', () => {
-  it('returns 10 approved questions per Chapter 1 node, in id order', () => {
-    for (const nodeId of ['1.1-js-basics', '1.2-css-basics', '1.3-jsx', '1.4-components-state-props']) {
-      const qs = questionsForNodeLocal(nodeId, ALL_QUESTIONS);
+  it('returns 10 approved questions per node, in id order', () => {
+    for (const node of NODES) {
+      const qs = questionsForNodeLocal(node.id, ALL_QUESTIONS);
       expect(qs).toHaveLength(10);
       const ids = qs.map(q => q.id);
       expect(ids).toEqual([...ids].sort());

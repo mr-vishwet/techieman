@@ -1,6 +1,7 @@
-// TechieMan — question-bank + persistence layer (M3/M4).
+// TechieMan — question-bank + persistence layer (M3/M4, M6: Ch2–8 wired).
 // Single source of truth: the TS question arrays (data/questions.ts,
-// data/questions-ch1a.ts, data/questions-ch1b.ts). SQLite is a CACHE +
+// data/questions-ch1a.ts, data/questions-ch1b.ts, data/questions-ch2.ts
+// … data/questions-ch8.ts). SQLite is a CACHE +
 // the home of progress/fights — it is seeded FROM the arrays at app start,
 // so the bundle and the DB can never diverge. All SQL-building helpers are
 // pure (testable without the native module); only openDb/initDb touch Nitro.
