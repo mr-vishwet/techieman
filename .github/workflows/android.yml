@@ -55,7 +55,11 @@ jobs:
           packages: 'platform-tools platforms;android-36 build-tools;37.0.0 ndk;27.1.12297006'
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --no-daemon
+        # gradlew lost its executable bit: the connector push that created
+        # it writes files via the GitHub API, which defaults to mode
+        # 100644. chmod it on every run so the build never depends on the
+        # stored mode.
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
         working-directory: android
 
       - name: Upload debug APK
