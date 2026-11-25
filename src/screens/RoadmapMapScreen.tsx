@@ -6,6 +6,7 @@ import React from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CHAPTERS, NODES, ROADMAP, nodesForChapter } from '../data/roadmap';
+import { hasLevel } from '../data/levels';
 import { colors, spacing, typography } from '../theme/tokens';
 import { useGameStore } from '../store/useGameStore';
 import type { RootStackParamList } from '../navigation/types';
@@ -52,22 +53,36 @@ export function RoadmapMapScreen({ navigation }: Props) {
               {nodes.map(node => {
                 const isCleared = clearedNodeIds.includes(node.id);
                 const isOpen = node.order === 1 || clearedNodeIds.includes(nodes[node.order - 2]?.id ?? '');
+                const liveLevel = hasLevel(node.id);
                 return (
-                  <Pressable
-                    key={node.id}
-                    disabled={!isOpen}
-                    onPress={() => navigation.navigate('Fight', { nodeId: node.id })}
-                    style={[styles.nodeRow, !isOpen && styles.nodeLocked]}>
-                    <Text style={styles.nodeDot}>{isCleared ? '✓' : isOpen ? '⚔️' : '🔒'}</Text>
-                    <View style={styles.nodeText}>
-                      <Text style={[styles.nodeTitle, !isOpen && styles.nodeTitleLocked]}>
-                        {node.order}. {node.title}
-                      </Text>
-                      <Text style={styles.nodeMeta}>
-                        Difficulty {node.difficulty}/5{node.isSideQuest ? ' · side quest' : ''}
-                      </Text>
-                    </View>
-                  </Pressable>
+                  <View key={node.id} style={[styles.nodeRow, !isOpen && styles.nodeLocked]}>
+                    <Pressable
+                      disabled={!isOpen}
+                      onPress={() => navigation.navigate('Fight', { nodeId: node.id })}
+                      style={styles.nodeMain}>
+                      <Text style={styles.nodeDot}>{isCleared ? '✓' : isOpen ? '⚔️' : '🔒'}</Text>
+                      <View style={styles.nodeText}>
+                        <Text style={[styles.nodeTitle, !isOpen && styles.nodeTitleLocked]}>
+                          {node.order}. {node.title}
+                        </Text>
+                        <Text style={styles.nodeMeta}>
+                          Difficulty {node.difficulty}/5{node.isSideQuest ? ' · side quest' : ''}
+                        </Text>
+                      </View>
+                    </Pressable>
+                    {liveLevel ? (
+                      <Pressable
+                        disabled={!isOpen}
+                        onPress={() => navigation.navigate('Level', { nodeId: node.id })}
+                        style={styles.levelButton}>
+                        <Text style={styles.levelButtonText}>▶ Live level</Text>
+                      </Pressable>
+                    ) : (
+                      <View style={styles.levelPending}>
+                        <Text style={styles.levelPendingText}>Level in production</Text>
+                      </View>
+                    )}
+                  </View>
                 );
               })}
               <View style={styles.bossRow}>
@@ -115,6 +130,16 @@ const styles = StyleSheet.create({
     borderTopColor: colors.voidSoft,
     marginTop: spacing.sm,
   },
+  nodeMain: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  levelButton: {
+    backgroundColor: colors.crimson,
+    borderRadius: 999,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  levelButtonText: { ...typography.caption, color: colors.cream, fontWeight: '700' },
+  levelPending: { paddingHorizontal: spacing.xs, paddingVertical: spacing.xs },
+  levelPendingText: { ...typography.caption, color: colors.creamDim },
   nodeLocked: { opacity: 0.45 },
   nodeDot: { fontSize: 16 },
   nodeText: { flex: 1 },
