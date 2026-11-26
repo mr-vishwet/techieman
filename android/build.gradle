@@ -20,7 +20,13 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        // Pin the version explicitly: the unversioned entry resolves
+        // through React Native's Gradle plugin catalog
+        // (node_modules/@react-native/gradle-plugin/gradle/
+        // libs.versions.toml, kotlin = "2.2.0"), and node_modules is not
+        // in the repo, so ext.kotlinVersion alone never took effect —
+        // CI run #6 still compiled with 2.2.0 after the ext bump.
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.0")
         // M5: Firebase — google-services plugin reads android/app/google-services.json.
         // The file is a PLACEHOLDER until Vishwet adds the real one (see FIREBASE_SETUP.md).
         classpath("com.google.gms:google-services:4.4.2")
