@@ -1,0 +1,6 @@
+# Godot generated / local-only — never commit
+.godot/
+build/
+*.import
+# Export templates live outside the repo (tools dir)
+# Web export output and APKs are binaries — never push via the connector
