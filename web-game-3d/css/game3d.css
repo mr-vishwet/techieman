@@ -1,0 +1,174 @@
+/* TECHIEMAN REAL 3D — game3d.css
+ * HUD language from preview3: black brush labels, green hero HP, red boss
+ * bar, gold accents, monochrome world. Green appears ONLY on the hero HP
+ * bar + guard circle; red ONLY on the boss bar + boss HP number; fire
+ * orange ONLY on slash sparks (in-canvas) and the deflect cue.
+ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #111; }
+body { font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: #f2f2f2; }
+#stage-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#stage { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #bcbcbc; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hidden { display: none !important; }
+
+/* --- HUD --- */
+#hud { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+#hud button { pointer-events: auto; }
+.brush {
+  display: inline-block; background: #111; color: #fff; font-weight: 900;
+  font-style: italic; font-size: 26px; padding: 4px 16px 4px 12px;
+  clip-path: polygon(0 12%, 4% 0, 96% 4%, 100% 18%, 98% 88%, 92% 100%, 6% 96%, 0 82%);
+  letter-spacing: 0.5px; text-shadow: none;
+}
+.hud-tl { position: absolute; top: 14px; left: 16px; }
+.hud-portrait-row { display: flex; gap: 10px; margin-top: 10px; align-items: flex-start; }
+.portrait { width: 58px; height: 58px; border: 3px solid #111; background: #1a1a1a; box-shadow: 0 2px 8px rgba(0,0,0,.5); }
+.portrait svg { width: 100%; height: 100%; display: block; }
+.hud-level { font-weight: 900; font-size: 18px; color: #fff; text-shadow: 0 1px 3px #000, 0 0 8px rgba(0,0,0,.8); }
+.bar { width: 170px; height: 13px; background: rgba(0,0,0,.65); border: 2px solid #111; margin-top: 4px; }
+.bar i { display: block; height: 100%; background: #2aff5a; transition: width .15s; }
+.bar.blue { height: 6px; }
+.bar.blue i { background: #4da3ff; }
+.bar.boss { width: 340px; height: 15px; }
+.bar.boss i { background: #ff2a2a; }
+.weapon-line { font-size: 14px; font-weight: 700; color: #fff; text-shadow: 0 1px 3px #000; margin-top: 4px; }
+.hud-tc { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); text-align: center; }
+.boss-name { font-weight: 900; font-size: 22px; color: #fff; text-shadow: 0 2px 4px #000; letter-spacing: 1px; }
+.boss-hp-num { font-weight: 900; font-size: 20px; color: #fff; text-shadow: 0 2px 4px #000; margin-top: 3px; letter-spacing: 1px; }
+.boss-hp-num span { color: #ff5a5a; font-size: 26px; }
+.hud-tr { position: absolute; top: 14px; right: 16px; display: flex; gap: 10px; align-items: flex-start; }
+.minimap { width: 96px; height: 96px; border-radius: 50%; border: 3px solid rgba(255,255,255,.35); overflow: hidden; background: #262626; }
+.minimap svg { width: 100%; height: 100%; display: block; }
+.gear { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #111; background: rgba(20,20,20,.8); color: #fff; font-size: 20px; cursor: pointer; }
+.objective { position: absolute; top: 128px; right: 16px; max-width: 300px; text-align: right; font-weight: 700; font-size: 15px; color: #fff; text-shadow: 0 1px 3px #000; }
+.combo { position: absolute; top: 170px; right: 16px; font-weight: 900; font-style: italic; font-size: 30px; color: #fff; text-shadow: 0 2px 6px #000; text-align: right; }
+.combo small { display: block; font-size: 13px; letter-spacing: 2px; }
+.deflect-cue {
+  position: absolute; top: 38%; left: 50%; transform: translateX(-50%);
+  background: #ffd75e; color: #111; font-weight: 900; font-size: 26px;
+  padding: 10px 22px; border: 3px solid #111; box-shadow: 0 0 30px #ffd75e;
+  animation: cuepulse .35s infinite alternate; letter-spacing: 1px; white-space: nowrap;
+}
+@keyframes cuepulse { from { transform: translateX(-50%) scale(1); } to { transform: translateX(-50%) scale(1.06); } }
+
+/* joystick + skills (bottom corners, preview3) */
+.joystick {
+  position: absolute; left: 26px; bottom: 26px; width: 128px; height: 128px;
+  border-radius: 50%; background: rgba(20,20,20,.35); border: 3px solid rgba(255,255,255,.5);
+  pointer-events: auto; touch-action: none;
+}
+.joystick .knob {
+  position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,.75); transform: translate(-50%, -50%);
+  box-shadow: 0 2px 10px rgba(0,0,0,.5);
+}
+.skills { position: absolute; right: 26px; bottom: 26px; display: flex; gap: 12px; pointer-events: auto; }
+.skill {
+  width: 66px; height: 66px; border-radius: 50%; border: 3px solid rgba(255,255,255,.6);
+  background: rgba(10,10,10,.8); color: #fff; cursor: pointer; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.skill svg { width: 34px; height: 34px; }
+.skill .key {
+  position: absolute; bottom: -9px; right: -4px; background: #ffd75e; color: #111;
+  font-weight: 900; font-size: 13px; width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; border: 2px solid #111;
+}
+.skill:active { transform: scale(.92); background: #333; }
+
+/* --- world UI overlays (DOM panels over the 3D canvas) --- */
+#world-ui { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+#world-ui button { pointer-events: auto; }
+.select-title { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); }
+.name-plate {
+  position: absolute; bottom: 108px; left: 50%; transform: translateX(-50%);
+  background: #111; color: #fff; font-weight: 900; font-size: 24px; padding: 6px 22px;
+}
+.stat-panel {
+  position: absolute; right: 30px; top: 38%; width: 250px; background: rgba(15,15,15,.82);
+  border: 2px solid rgba(255,255,255,.25); padding: 16px; color: #fff;
+}
+.stat-panel .row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.stat-panel .lab { width: 52px; font-weight: 900; font-size: 14px; letter-spacing: 1px; }
+.stat-panel .track { flex: 1; height: 10px; background: #333; }
+.stat-panel .track i { display: block; height: 100%; background: #ffd75e; }
+.stat-panel .tagline { font-style: italic; color: #ddd; margin-top: 6px; font-size: 15px; }
+.pad-controls {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 26px; font-weight: 700; font-size: 17px; color: #fff;
+  text-shadow: 0 1px 3px #000; pointer-events: auto; cursor: pointer;
+}
+.pad-controls b {
+  display: inline-flex; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: #111;
+  align-items: center; justify-content: center; font-size: 15px; margin-right: 6px;
+}
+.road-tabs { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+.road-tab {
+  background: rgba(15,15,15,.85); color: #fff; border: 2px solid rgba(255,255,255,.4);
+  padding: 8px 14px; font-weight: 800; font-size: 15px; cursor: pointer;
+}
+.road-tab.active { background: #ffd75e; color: #111; border-color: #111; }
+.map-info {
+  position: absolute; top: 112px; left: 50%; transform: translateX(-50%);
+  background: rgba(15,15,15,.8); padding: 8px 16px; font-size: 14px; max-width: 760px; text-align: center;
+}
+.play-btn {
+  display: block; margin: 0 auto; background: #ffd75e; color: #111; border: 3px solid #111;
+  font-weight: 900; font-size: 18px; padding: 12px 22px; cursor: pointer;
+  position: absolute; left: 50%; transform: translateX(-50%); bottom: 84px;
+}
+.play-btn.boss-btn { bottom: 28px; background: #111; color: #ff5a5a; border-color: #ff5a5a; }
+.narr-panel {
+  position: absolute; left: 5%; top: 18%; width: 46%; color: #fff;
+  font-size: 24px; line-height: 1.5; text-shadow: 0 2px 6px #000; font-weight: 600;
+  background: rgba(12,12,12,.72); padding: 22px 26px; border-left: 5px solid #ffd75e;
+}
+.narr-panel p { margin-bottom: 18px; }
+.narr-bottom {
+  position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+  font-size: 20px; font-style: italic; color: #fff; text-shadow: 0 2px 4px #000; white-space: nowrap;
+}
+.narr-bottom .narr-who { font-weight: 900; font-style: normal; }
+.narr-continue {
+  position: absolute; right: 40px; bottom: 30px; background: #111; color: #fff;
+  border: 2px solid #fff; font-weight: 900; font-size: 18px; padding: 10px 18px; cursor: pointer;
+}
+.narr-continue b { background: #fff; color: #111; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; }
+.rise-hint {
+  position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%);
+  font-size: 20px; font-weight: 700; font-style: italic; color: #fff; text-shadow: 0 2px 4px #000;
+}
+
+/* --- banner / subtitle / errors / float text --- */
+#banner {
+  position: absolute; top: 34%; left: 50%; transform: translate(-50%, -50%); z-index: 6;
+  background: rgba(10,10,10,.88); color: #fff; font-weight: 900; font-size: 44px; text-align: center;
+  padding: 18px 34px; border: 3px solid #ffd75e; letter-spacing: 1px; pointer-events: none;
+}
+#banner small { display: block; font-size: 19px; font-weight: 600; margin-top: 8px; color: #ddd; }
+#subtitle {
+  position: absolute; bottom: 118px; left: 50%; transform: translateX(-50%); z-index: 6;
+  background: rgba(0,0,0,.72); color: #fff; font-size: 19px; padding: 10px 20px;
+  max-width: 82%; text-align: center; pointer-events: none;
+}
+#subtitle .who { font-weight: 900; color: #ffd75e; }
+#err {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 20; background: #a00; color: #fff;
+  font-weight: 700; padding: 10px 16px; font-size: 15px;
+}
+.float-text {
+  position: fixed; z-index: 7; font-weight: 900; font-size: 24px; color: #fff;
+  text-shadow: 0 2px 4px #000; pointer-events: none; animation: floatup 1.1s ease-out forwards;
+  max-width: 420px; text-align: center; transform: translate(-50%, -50%);
+}
+.float-text.dmg { color: #ffd75e; font-size: 30px; }
+.float-text.hurt { color: #ff5a5a; }
+@keyframes floatup { from { opacity: 1; margin-top: 0; } to { opacity: 0; margin-top: -60px; } }
+#test-log {
+  position: absolute; left: 8px; bottom: 8px; z-index: 30; max-width: 640px;
+  font-family: monospace; font-size: 12px; color: #0f0; background: rgba(0,0,0,.55);
+  padding: 6px 8px; pointer-events: none; white-space: pre-wrap;
+}
+#test-log:empty { display: none; }
+body.frozen #test-log { display: none; }

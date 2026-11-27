@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>TechieMan — Real 3D</title>
+<link rel="stylesheet" href="css/game3d.css">
+<!--
+  TECHIEMAN REAL 3D — no build step, no CDN, no fetch of local files.
+  Open this file in a browser. Vendored: three.min.js (r149 UMD, global THREE)
+  + helvetiker_font.js (window.HELVETIKER_FONT; the .js wrapper is used because
+  file:// fetch of the .json is blocked by CORS in Chrome).
+
+  Deep links: ?scene=hero|map|run|narrate|troops|boss
+              &road=kotlin|java|android|python|react-native &chapter=1..50
+              &t=<seconds> freeze &seed=N &cam=front|side
+              &codeset=kotlin|nullpointer &chest=canon|all-code
+              &autotest=boss|run|smoke
+  Controls: J/R slash (deflect) · S/↓ guard · A/D or ←/→ dodge · W/↑ step toward
+            the boss in 3D (boss fight) / jump (run) · Space jump · Q Debug Nova
+            · K "if" bullet · P pause · R retry after KO · Enter next
+  Open decisions (see README.md): CODE_SET (kotlin vs nullpointer lines),
+  HERO_CHEST (canon sheet lettering vs all-CODE chests).
+-->
+</head>
+<body>
+  <div id="stage-wrap">
+    <div id="stage">
+      <canvas id="gl"></canvas>
+      <div id="hud"></div>
+      <div id="world-ui"></div>
+      <div id="banner" class="hidden"></div>
+      <div id="subtitle" class="hidden"></div>
+      <div id="err" class="hidden"></div>
+      <div id="test-log"></div>
+    </div>
+  </div>
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/helvetiker_font.js"></script>
+  <script src="js/data3d.js"></script>
+  <script src="js/three-text.js"></script>
+  <script src="js/characters3d.js"></script>
+  <script src="js/game3d.js"></script>
+  <script src="js/scenes3d.js"></script>
+</body>
+</html>
