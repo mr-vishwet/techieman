@@ -22,7 +22,7 @@ var FREEZE_T = QS.has('t') ? Math.max(0, parseFloat(QS.get('t')) || 0) : null;
 var SEED = QS.has('seed') ? (parseInt(QS.get('seed'), 10) || 1) : 20261127;
 var CAM_MODE = (QS.get('cam') || 'front').toLowerCase();
 var AUTOTEST = (QS.get('autotest') || '').toLowerCase();
-if (QS.get('codeset') === 'nullpointer' || QS.get('codeset') === 'kotlin') CODE_SET = QS.get('codeset');
+if (['kotlin', 'nullpointer', 'concurrentchaos'].indexOf(QS.get('codeset')) >= 0) CODE_SET = QS.get('codeset');
 if (QS.get('chest') === 'all-code' || QS.get('chest') === 'canon') HERO_CHEST = QS.get('chest');
 
 /* --- seeded RNG --- */

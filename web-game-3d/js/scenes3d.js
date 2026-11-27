@@ -696,7 +696,10 @@ SCENES3D.boss = {
   init: function () {
     buildWorld();
     var road = ROADS[ROAD];
-    var lines = CODE_SETS[road.bossLines];
+    // CODE_SET flips to the road's alternate line set when it names one
+    // (?codeset=nullpointer on Kotlin, ?codeset=concurrentchaos on Java);
+    // any other value falls back to the road's default set.
+    var lines = CODE_SETS[(road.bossAltLines && CODE_SET === road.bossAltLines) ? road.bossAltLines : road.bossLines];
     buildHUD({ label: 'Boss Fight — ' + road.name, level: 12, showBoss: true,
       bossName: road.bossDisplay,
       bossHpPct: 100, objective: 'Defeat ' + road.bossDisplay, joystick: true, skills: true, pause: true });
