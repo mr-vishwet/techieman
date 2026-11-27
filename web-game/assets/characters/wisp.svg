@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160">
+  <!-- WISP — drifting hollow-? cloud, semi-transparent, brightest-eyed first -->
+  <g opacity=".85">
+    <ellipse cx="100" cy="80" rx="72" ry="48" fill="#111" opacity=".55"/>
+    <ellipse cx="100" cy="80" rx="56" ry="36" fill="#1c1c1c" opacity=".7"/>
+  </g>
+  <!-- hollow ? shape -->
+  <text x="100" y="104" font-family="Arial Black, Arial, sans-serif" font-size="64" font-weight="900" text-anchor="middle" fill="#e8e8e8" opacity=".9">?</text>
+  <!-- wispy N-U-L-L letters trailing -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="20" text-anchor="middle" fill="#bbb" opacity=".75">
+    <text x="52" y="132">N</text><text x="82" y="140">U</text><text x="116" y="140">L</text><text x="148" y="132">L</text>
+  </g>
+  <!-- brightest eyes -->
+  <ellipse cx="84" cy="66" rx="7" ry="4" fill="#fff"/>
+  <ellipse cx="118" cy="66" rx="7" ry="4" fill="#fff"/>
+  <!-- drift trails -->
+  <g stroke="#999" stroke-width="2.5" stroke-linecap="round" opacity=".6" fill="none">
+    <path d="M30 100 Q 44 116 30 132"/><path d="M170 100 Q 156 116 170 132"/>
+  </g>
+</svg>

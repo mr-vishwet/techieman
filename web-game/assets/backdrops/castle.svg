@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c6c6c6"/><stop offset=".5" stop-color="#8f8f8f"/><stop offset="1" stop-color="#5f5f5f"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#484848"/><stop offset=".35" stop-color="#2e2e2e"/><stop offset="1" stop-color="#191919"/>
+    </linearGradient>
+    <radialGradient id="bookGlow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffd75e" stop-opacity=".55"/><stop offset="1" stop-color="#ffd75e" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="mist" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <g fill="#ffffff" opacity=".22" filter="url(#soft)">
+    <ellipse cx="200" cy="90" rx="170" ry="24"/><ellipse cx="1000" cy="70" rx="190" ry="22"/>
+  </g>
+  <!-- great castle, centre-back -->
+  <g fill="#4a4a4a" stroke="#2c2c2c" stroke-width="2">
+    <path d="M520 560 L520 260 L545 210 L570 260 L570 560 Z"/>
+    <path d="M600 560 L600 180 L628 120 L656 180 L656 560 Z"/>
+    <path d="M690 560 L690 240 L716 190 L742 240 L742 560 Z"/>
+    <path d="M500 560 L760 560 L760 420 L500 420 Z"/>
+  </g>
+  <g fill="#141414">
+    <rect x="612" y="220" width="10" height="20"/><rect x="612" y="280" width="10" height="20"/><rect x="612" y="340" width="10" height="20"/>
+    <rect x="700" y="280" width="10" height="18"/><rect x="532" y="300" width="10" height="18"/>
+    <rect x="540" y="460" width="14" height="22"/><rect x="590" y="460" width="14" height="22"/><rect x="640" y="460" width="14" height="22"/><rect x="690" y="460" width="14" height="22"/>
+  </g>
+  <!-- side ruined towers -->
+  <g fill="#555" stroke="#333" stroke-width="1.5">
+    <path d="M80 560 L80 300 L100 260 L120 300 L120 560 Z"/>
+    <path d="M1140 560 L1140 320 L1160 280 L1180 320 L1180 560 Z"/>
+    <path d="M220 560 L220 420 L240 395 L260 420 L260 560 Z"/>
+    <path d="M1010 560 L1010 430 L1030 405 L1050 430 L1050 560 Z"/>
+  </g>
+  <!-- floating islands (kept clear of the Guide's head, right side) -->
+  <g fill="#454545" opacity=".8">
+    <polygon points="140,170 280,170 255,210 165,210"/>
+    <polygon points="300,130 440,130 415,170 325,170"/>
+  </g>
+  <!-- warm glow where the Guide's book will be (right side) -->
+  <ellipse cx="950" cy="430" rx="260" ry="190" fill="url(#bookGlow)"/>
+  <!-- cracked ground -->
+  <polygon points="0,560 1280,560 1280,720 0,720" fill="url(#ground)"/>
+  <g stroke="#101010" stroke-width="2" opacity=".85">
+    <path d="M0 600 L1280 596"/><path d="M0 645 L1280 650"/><path d="M0 690 L1280 686"/>
+    <path d="M150 560 L130 720"/><path d="M420 560 L440 720"/><path d="M700 560 L680 720"/><path d="M980 560 L1010 720"/>
+  </g>
+  <g stroke="#0d0d0d" stroke-width="2.5" fill="none" opacity=".9">
+    <path d="M300 615 L350 635 L330 660"/><path d="M820 625 L780 648 L810 672"/>
+  </g>
+  <!-- heavy mist -->
+  <g fill="#e8e8e8" opacity=".18" filter="url(#mist)">
+    <rect x="0" y="480" width="1280" height="80"/><rect x="0" y="580" width="1280" height="60"/>
+    <rect x="0" y="300" width="1280" height="50" opacity=".5"/>
+  </g>
+</svg>

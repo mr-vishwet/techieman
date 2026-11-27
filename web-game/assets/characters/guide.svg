@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420">
+  <defs>
+    <linearGradient id="book" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff3c4"/><stop offset=".5" stop-color="#ffd75e"/><stop offset="1" stop-color="#fff3c4"/>
+    </linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="cloak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e1e1e"/><stop offset="1" stop-color="#000"/>
+    </linearGradient>
+  </defs>
+  <!-- long cloak dissolving into ink wisps -->
+  <path d="M104 96 L 156 96 Q 176 190 196 280 Q 206 340 196 396 Q 180 380 168 396 Q 152 384 138 398 Q 122 384 108 398 Q 92 382 82 398 Q 66 340 76 280 Q 88 190 104 96 Z" fill="url(#cloak)" stroke="#3d3d3d" stroke-width="1.5"/>
+  <path d="M196 396 Q 210 410 196 420 M 168 396 Q 178 412 164 420 M 108 398 Q 96 414 84 420" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+  <!-- hood + deep shadow face, two glowing eyes -->
+  <path d="M92 96 Q 88 40 130 34 Q 172 40 168 96 Q 150 112 130 112 Q 110 112 92 96 Z" fill="#0a0a0a"/>
+  <ellipse cx="130" cy="82" rx="26" ry="28" fill="#000"/>
+  <ellipse cx="120" cy="80" rx="5" ry="3" fill="#fff" filter="url(#glow)"/>
+  <ellipse cx="142" cy="80" rx="5" ry="3" fill="#fff" filter="url(#glow)"/>
+  <!-- open book, glowing gold -->
+  <g filter="url(#glow)">
+    <path d="M92 210 Q 112 196 130 206 Q 148 196 168 210 L 168 250 Q 148 240 130 250 Q 112 240 92 250 Z" fill="url(#book)" stroke="#7a5c00" stroke-width="1.5"/>
+    <line x1="130" y1="206" x2="130" y2="250" stroke="#7a5c00" stroke-width="2"/>
+  </g>
+  <g stroke="#7a5c00" stroke-width="1" opacity=".8">
+    <line x1="98" y1="218" x2="124" y2="214"/><line x1="98" y1="228" x2="124" y2="224"/><line x1="98" y1="238" x2="124" y2="234"/>
+    <line x1="136" y1="214" x2="162" y2="218"/><line x1="136" y1="224" x2="162" y2="228"/><line x1="136" y1="234" x2="162" y2="238"/>
+  </g>
+  <!-- hands holding the book -->
+  <ellipse cx="96" cy="238" rx="10" ry="7" fill="#0a0a0a"/>
+  <ellipse cx="164" cy="238" rx="10" ry="7" fill="#0a0a0a"/>
+  <!-- arms to the book -->
+  <path d="M104 130 Q 84 170 92 210 L 104 206 Q 98 170 114 140 Z" fill="#0a0a0a"/>
+  <path d="M156 130 Q 176 170 168 210 L 156 206 Q 162 170 146 140 Z" fill="#0a0a0a"/>
+</svg>

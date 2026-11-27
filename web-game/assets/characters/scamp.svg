@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140">
+  <!-- SCAMP — small trio creature, body built from the letters N-U-L-L -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="52" text-anchor="middle">
+    <text x="102" y="92" fill="#555">NULL</text>
+    <text x="100" y="90" fill="#8a8a8a">NULL</text>
+    <text x="98" y="88" fill="#111" stroke="#eee" stroke-width="1.6">NULL</text>
+  </g>
+  <!-- spiky ears / horns -->
+  <path d="M52 44 L 44 18 L 62 38 Z" fill="#0a0a0a"/>
+  <path d="M148 44 L 156 18 L 138 38 Z" fill="#0a0a0a"/>
+  <!-- hollow white eyes -->
+  <ellipse cx="72" cy="58" rx="6" ry="3.4" fill="#fff"/>
+  <ellipse cx="128" cy="58" rx="6" ry="3.4" fill="#fff"/>
+  <!-- little clawed legs -->
+  <path d="M60 108 L 54 128 M 72 108 L 72 128 M 128 108 L 128 128 M 140 108 L 146 128" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
+  <!-- tail -->
+  <path d="M168 92 Q 190 84 192 62" fill="none" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
+</svg>

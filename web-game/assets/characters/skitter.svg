@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140">
+  <!-- SKITTER — erratic dasher, body built from N-U-L-L, legs are [ ] brackets -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="46" text-anchor="middle">
+    <text x="102" y="86" fill="#555" transform="rotate(-6 100 86)">NULL</text>
+    <text x="100" y="84" fill="#8a8a8a" transform="rotate(-6 100 84)">NULL</text>
+    <text x="98" y="82" fill="#111" stroke="#eee" stroke-width="1.6" transform="rotate(-6 98 82)">NULL</text>
+  </g>
+  <!-- spiky back -->
+  <path d="M60 48 L 54 30 L 68 40 L 70 22 L 82 38 L 90 20 L 100 38 L 112 22 L 120 40 L 134 30 L 132 50 Z" fill="#0a0a0a"/>
+  <!-- white eyes -->
+  <ellipse cx="66" cy="56" rx="5.5" ry="3.2" fill="#fff"/>
+  <ellipse cx="136" cy="56" rx="5.5" ry="3.2" fill="#fff"/>
+  <!-- bracket legs [ ] -->
+  <g stroke="#0a0a0a" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M56 100 L 48 100 L 48 128"/><path d="M78 100 L 78 128 L 86 128"/>
+    <path d="M122 100 L 114 100 L 114 128"/><path d="M144 100 L 152 100 L 152 128"/>
+  </g>
+  <!-- motion dashes -->
+  <g stroke="#888" stroke-width="3" stroke-linecap="round">
+    <line x1="10" y1="70" x2="30" y2="70"/><line x1="14" y1="90" x2="34" y2="90"/>
+  </g>
+</svg>

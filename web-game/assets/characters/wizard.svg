@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 340">
+  <defs>
+    <linearGradient id="robe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c1c1c"/><stop offset="1" stop-color="#000"/>
+    </linearGradient>
+  </defs>
+  <!-- pointed wizard hat -->
+  <path d="M92 58 Q 116 6 138 52 Q 150 44 158 52 Q 128 30 96 62 Z" fill="#0a0a0a"/>
+  <path d="M108 34 Q 118 2 136 22 Q 126 10 118 34 Z" fill="#0a0a0a"/>
+  <ellipse cx="116" cy="58" rx="34" ry="9" fill="#0a0a0a"/>
+  <!-- hood + shadowed face -->
+  <ellipse cx="116" cy="72" rx="20" ry="22" fill="#0a0a0a"/>
+  <path d="M96 62 Q 116 48 136 62 L 134 76 Q 116 66 98 76 Z" fill="#000"/>
+  <ellipse cx="108" cy="72" rx="4" ry="2.4" fill="#fff"/>
+  <ellipse cx="126" cy="72" rx="4" ry="2.4" fill="#fff"/>
+  <!-- long flowing robe -->
+  <path d="M92 88 L 140 88 Q 152 160 168 230 Q 176 268 168 300 Q 116 316 66 300 Q 58 268 66 230 Q 80 160 92 88 Z" fill="url(#robe)" stroke="#3a3a3a" stroke-width="1.5"/>
+  <path d="M66 300 Q 90 288 116 296 Q 142 288 168 300" fill="none" stroke="#555" stroke-width="1.5"/>
+  <!-- LOGIC down the chest -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="24" text-anchor="middle" fill="#fff">
+    <text x="116" y="118">L</text><text x="116" y="142">O</text><text x="116" y="166">G</text><text x="116" y="190">I</text><text x="116" y="214">C</text>
+  </g>
+  <!-- IF / ELSE down the robe -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="19" text-anchor="middle">
+    <text x="116" y="246" fill="#c9c9c9">IF</text>
+    <text x="116" y="276" fill="#c9c9c9">ELSE</text>
+  </g>
+  <!-- raised arm with </> above the palm -->
+  <path d="M140 96 Q 168 84 186 62 L 196 70 Q 178 96 150 108 Z" fill="#0a0a0a"/>
+  <path d="M186 62 L 180 52 M 190 60 L 186 48 M 194 62 L 194 50" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+  <text x="188" y="36" font-family="Courier New, monospace" font-size="26" font-weight="700" fill="#fff" text-anchor="middle">&lt;/&gt;</text>
+  <!-- left arm, clawed fingers -->
+  <path d="M92 96 Q 66 112 54 138 L 66 144 Q 78 122 100 110 Z" fill="#0a0a0a"/>
+  <path d="M54 138 L 44 150 M 58 142 L 52 156 M 62 144 L 62 158" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+</svg>

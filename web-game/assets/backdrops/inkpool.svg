@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d3d3d3"/><stop offset=".55" stop-color="#9d9d9d"/><stop offset="1" stop-color="#717171"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4a4a"/><stop offset=".3" stop-color="#2f2f2f"/><stop offset="1" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <filter id="mist" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <g fill="#ffffff" opacity=".25" filter="url(#soft)">
+    <ellipse cx="230" cy="85" rx="180" ry="24"/><ellipse cx="990" cy="65" rx="190" ry="22"/><ellipse cx="620" cy="150" rx="220" ry="20"/>
+  </g>
+  <g fill="#484848" opacity=".8">
+    <polygon points="110,180 250,180 225,225 140,225"/>
+    <polygon points="1040,150 1180,150 1155,195 1065,195"/>
+    <polygon points="540,110 680,110 660,150 560,150"/>
+  </g>
+  <g fill="#555" stroke="#333" stroke-width="1.5">
+    <path d="M50 560 L50 270 L70 225 L90 270 L90 560 Z"/>
+    <path d="M110 560 L110 340 L160 340 L160 380 L140 380 L140 560 Z"/>
+    <path d="M1170 560 L1170 240 L1190 195 L1210 240 L1210 560 Z"/>
+    <path d="M340 560 L340 340 L358 310 L376 340 L376 560 Z"/>
+    <path d="M900 560 L900 320 L920 285 L940 320 L940 560 Z"/>
+  </g>
+  <g fill="#1c1c1c">
+    <rect x="62" y="310" width="8" height="15"/><rect x="62" y="370" width="8" height="15"/>
+    <rect x="1182" y="280" width="8" height="15"/><rect x="350" y="380" width="7" height="13"/>
+  </g>
+  <!-- wet reflective flagstones -->
+  <polygon points="0,560 1280,560 1280,720 0,720" fill="url(#ground)"/>
+  <g stroke="#121212" stroke-width="2" opacity=".85">
+    <path d="M0 600 L1280 596"/><path d="M0 645 L1280 650"/><path d="M0 690 L1280 686"/>
+    <path d="M130 560 L110 720"/><path d="M380 560 L400 720"/><path d="M640 560 L625 720"/><path d="M900 560 L930 720"/><path d="M1140 560 L1165 720"/>
+  </g>
+  <g fill="#d5d5d5" opacity=".2">
+    <ellipse cx="320" cy="650" rx="170" ry="14"/><ellipse cx="920" cy="685" rx="200" ry="15"/>
+  </g>
+  <!-- black ink pool with drips — its surface sits LOW (y ~610-640) so
+       troops standing at the pool edge (feet ~610) show their whole bodies
+       above the ink instead of drowning in it -->
+  <g fill="#000000">
+    <path d="M700 640 Q 760 610 860 632 Q 960 600 1080 628 Q 1180 608 1280 638 L1280 720 L700 720 Z"/>
+    <path d="M760 630 Q 790 685 770 720 Q 800 685 830 640 Z"/>
+    <path d="M980 615 Q 1010 675 990 712 Q 1020 675 1040 625 Z"/>
+    <path d="M1150 625 Q 1175 675 1160 712 Q 1185 675 1200 630 Z"/>
+  </g>
+  <g fill="#000" opacity=".85">
+    <circle cx="820" cy="640" r="10"/><circle cx="860" cy="680" r="7"/><circle cx="940" cy="660" r="9"/>
+    <circle cx="1060" cy="650" r="11"/><circle cx="1120" cy="690" r="7"/><circle cx="760" cy="700" r="6"/>
+  </g>
+  <g fill="#e8e8e8" opacity=".13" filter="url(#mist)">
+    <rect x="0" y="500" width="1280" height="70"/><rect x="0" y="600" width="1280" height="46"/>
+  </g>
+</svg>

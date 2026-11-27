@@ -1,0 +1,306 @@
+/* TECHIEMAN semi3d-mode — game.css
+   Stage is fixed 1280x720 (16:9). Auto-landscape rotates the whole stage on
+   portrait screens — there is NO rotate prompt anywhere in this game. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; background: #0b0b0b; overflow: hidden; }
+body {
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  color: #fff; -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+#viewport { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #0b0b0b; }
+#stage-wrap { position: relative; width: 1280px; height: 720px; flex: none; }
+#stage {
+  position: absolute; inset: 0; width: 1280px; height: 720px; overflow: hidden;
+  background: #8d8d8d; transform-origin: center center;
+}
+#stage.frozen * { animation-play-state: paused !important; }
+
+/* Portrait phones: rotate the stage 90deg so the 16:9 game fills the screen. */
+@media (orientation: portrait) {
+  #stage-wrap { width: 100vh; height: 100vw; }
+  #stage { transform: rotate(90deg) translate(0, 0); }
+}
+#stage.portrait-rotated { transform: rotate(90deg); }
+
+/* ---------- layers ---------- */
+.backdrop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+#world { position: absolute; inset: 0; z-index: 2; }
+#fx { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+#vignette { position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 42%, transparent 55%, rgba(0,0,0,.42) 100%); }
+#hud { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
+#hud button, #hud .clickable { pointer-events: auto; }
+.hidden { display: none !important; }
+
+/* ---------- HUD: brush labels ---------- */
+.brush {
+  display: inline-block; background: #111; color: #fff; font-style: italic;
+  font-size: 30px; line-height: 1; padding: 8px 22px 10px 14px;
+  clip-path: polygon(0 12%, 4% 0, 96% 4%, 100% 18%, 98% 88%, 92% 100%, 6% 96%, 0 82%);
+  letter-spacing: .5px; text-shadow: 0 2px 0 #000;
+}
+.brush.small { font-size: 24px; padding: 6px 18px 8px 12px; }
+.hud-tl { position: absolute; top: 14px; left: 14px; display: flex; flex-direction: column; gap: 8px; }
+.hud-portrait-row { display: flex; gap: 10px; align-items: flex-start; margin-top: 2px; }
+.portrait {
+  width: 64px; height: 64px; border: 2px solid #222; background: #1a1a1a;
+  box-shadow: 0 0 0 2px #555, 0 4px 14px rgba(0,0,0,.6); flex: none; overflow: hidden;
+}
+.portrait svg { width: 100%; height: 100%; display: block; }
+.hud-level { font-size: 19px; font-weight: 900; color: #fff; text-shadow: 0 2px 0 #000, 0 0 8px rgba(0,0,0,.8); margin-top: 2px; }
+.bar { height: 12px; background: #1c1c1c; border: 1px solid #000; box-shadow: inset 0 1px 2px #000; width: 190px; }
+.bar > i { display: block; height: 100%; background: linear-gradient(#7dff9e, #22c55e 55%, #15803d); }
+.bar.blue { height: 7px; margin-top: 3px; width: 190px; }
+.bar.blue > i { background: linear-gradient(#9fd8ff, #3b82f6 60%, #1d4ed8); }
+.bar.boss { width: 420px; height: 14px; }
+.bar.boss > i { background: linear-gradient(#ff7a7a, #dc2626 55%, #7f1d1d); }
+.weapon-line { font-size: 15px; font-weight: 700; color: #f2f2f2; text-shadow: 0 2px 0 #000; margin-top: 3px; letter-spacing: .4px; }
+.hud-tc { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); text-align: center; }
+.boss-name { font-size: 24px; font-weight: 900; color: #fff; text-shadow: 0 2px 0 #000, 0 0 12px rgba(0,0,0,.9); letter-spacing: 1px; margin-bottom: 5px; }
+.hud-tr { position: absolute; top: 14px; right: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.minimap {
+  width: 108px; height: 108px; border-radius: 50%; background: #1e1e1e;
+  border: 2px solid #444; box-shadow: 0 0 0 3px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.6);
+  position: relative; overflow: hidden;
+}
+.minimap svg { width: 100%; height: 100%; display: block; }
+.gear {
+  width: 40px; height: 40px; border-radius: 50%; background: rgba(20,20,20,.85);
+  border: 2px solid #666; color: #ddd; font-size: 21px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif;
+}
+.objective {
+  position: absolute; top: 168px; right: 18px; max-width: 240px; text-align: right;
+  font-size: 17px; font-weight: 800; color: #fff; text-shadow: 0 2px 0 #000, 0 0 10px #000;
+}
+.combo {
+  position: absolute; top: 150px; right: 26px; font-size: 30px; font-weight: 900;
+  font-style: italic; color: #fff; text-shadow: 0 3px 0 #000, 0 0 14px rgba(0,0,0,.9);
+  text-align: right; line-height: 1;
+}
+.combo small { display: block; font-size: 15px; letter-spacing: 2px; }
+
+/* ---------- touch controls ---------- */
+.joystick {
+  position: absolute; left: 34px; bottom: 30px; width: 128px; height: 128px; border-radius: 50%;
+  background: rgba(255,255,255,.08); border: 2px solid rgba(255,255,255,.45);
+  box-shadow: inset 0 0 24px rgba(0,0,0,.45); pointer-events: auto; touch-action: none;
+}
+.joystick .knob {
+  position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8e8e8, #9a9a9a 60%, #666);
+  transform: translate(-50%, -50%); box-shadow: 0 4px 10px rgba(0,0,0,.6);
+}
+.skills { position: absolute; right: 30px; bottom: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; pointer-events: auto; }
+.skill {
+  width: 66px; height: 66px; border-radius: 50%; border: 2px solid #777;
+  background: radial-gradient(circle at 35% 30%, #3a3a3a, #0d0d0d 70%);
+  color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,.65); position: relative;
+}
+.skill svg { width: 34px; height: 34px; }
+.skill.active { border-color: #d4a017; box-shadow: 0 0 0 3px rgba(212,160,23,.55), 0 4px 14px rgba(0,0,0,.65); }
+.skill .key {
+  position: absolute; right: -2px; bottom: -4px; background: #111; border: 1px solid #888;
+  border-radius: 4px; font-size: 11px; font-weight: 900; padding: 1px 5px; color: #eee;
+}
+.skill:active { transform: scale(.93); }
+.qer { position: absolute; left: 34px; bottom: 30px; display: flex; gap: 14px; pointer-events: auto; }
+.qer .skill { border-radius: 12px; transform: rotate(45deg); width: 60px; height: 60px; }
+.qer .skill svg, .qer .skill span.glyph { transform: rotate(-45deg); }
+.qer .skill .key { transform: rotate(-45deg); right: -6px; bottom: -10px; }
+
+/* ---------- banners / subtitles ---------- */
+#banner {
+  position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); z-index: 9;
+  font-size: 44px; font-weight: 900; font-style: italic; color: #fff; text-align: center;
+  text-shadow: 0 3px 0 #000, 0 0 24px rgba(0,0,0,.9); pointer-events: none; white-space: nowrap;
+}
+#banner small { display: block; font-size: 20px; font-style: normal; font-weight: 700; margin-top: 10px; letter-spacing: .5px; }
+#subtitle {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 9; pointer-events: none;
+  background: linear-gradient(transparent, rgba(0,0,0,.88) 30%);
+  color: #fff; font-size: 21px; font-weight: 700; text-align: center; padding: 44px 80px 22px;
+  text-shadow: 0 2px 0 #000;
+}
+#subtitle .who { color: #ffd75e; }
+
+/* ---------- world figures ---------- */
+.fig { position: absolute; z-index: 3; pointer-events: none; }
+.fig img, .fig svg { width: 100%; height: 100%; display: block; }
+.fig .hpbar { position: absolute; left: 8%; right: 8%; top: -16px; height: 7px; background: #111; border: 1px solid #000; }
+.fig .hpbar > i { display: block; height: 100%; background: linear-gradient(#ff7a7a, #dc2626); }
+.fig .hpbar.hero-hp > i { background: linear-gradient(#7dff9e, #22c55e); }
+.fig .tag {
+  position: absolute; left: 50%; transform: translateX(-50%); top: -38px; white-space: nowrap;
+  font-size: 13px; font-weight: 900; letter-spacing: 1px; color: #fff; text-shadow: 0 2px 0 #000;
+}
+.sprite-png { mix-blend-mode: multiply; }
+
+/* boss fight: the hero HP bar sits just above his head, anchored to the
+   figure — the old top:-16px floated ~35px above his hair (the SVG has
+   empty padding above the spiky hair, so the bar must sit lower in the fig) */
+#boss-hero .hpbar { top: 8px; left: 12%; right: 12%; }
+
+/* guard circle (green ONLY here) */
+.guard-ring {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: 4;
+  border: 5px solid #00E676;
+  background: radial-gradient(circle, rgba(105,240,174,.28) 0%, rgba(105,240,174,.10) 55%, rgba(0,166,81,.12) 100%);
+  box-shadow: 0 0 34px rgba(0,230,118,.55), inset 0 0 34px rgba(105,240,174,.35);
+  animation: guardPulse 1.1s ease-in-out infinite;
+}
+@keyframes guardPulse { 0%,100% { opacity: .92; } 50% { opacity: .65; } }
+
+/* code-line projectile chip */
+.code-chip {
+  position: absolute; z-index: 7; pointer-events: none;
+  background: #f5f0e6; color: #111; border: 2px solid #222; border-radius: 3px;
+  font-family: "Courier New", monospace; font-weight: 700; font-size: 15px;
+  padding: 6px 10px; box-shadow: 3px 3px 0 rgba(0,0,0,.55); white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+.code-chip.held {
+  background: #fff8e0; border-color: #8a6d00; box-shadow: 0 0 18px rgba(255,215,94,.8), 3px 3px 0 rgba(0,0,0,.5);
+}
+.code-chip.deflected { background: #e8ffe9; border-color: #00A651; }
+
+/* floating damage / callout text */
+.float-text {
+  position: absolute; z-index: 9; pointer-events: none; font-weight: 900;
+  font-size: 26px; color: #fff; text-shadow: 0 2px 0 #000; white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+.float-text.dmg { color: #ffe45c; font-size: 30px; }
+.float-text.hurt { color: #ff6b6b; }
+
+/* ---------- hero select ---------- */
+.hero-row { position: absolute; left: 0; right: 250px; bottom: 108px; display: flex; justify-content: center; gap: 46px; z-index: 3; }
+.hero-slot { position: relative; width: 190px; height: 330px; cursor: pointer; pointer-events: auto; transition: transform .25s ease, filter .25s ease; }
+.hero-slot img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 18px rgba(0,0,0,.6)); }
+.hero-slot.dim { filter: brightness(.55) saturate(.6); transform: scale(.94); }
+.hero-slot.focused { transform: scale(1.06); }
+.hero-slot.focused img { filter: drop-shadow(0 0 26px rgba(255,200,60,.55)) drop-shadow(0 12px 18px rgba(0,0,0,.6)); }
+.gold-platform {
+  position: absolute; left: 50%; bottom: -14px; transform: translateX(-50%);
+  width: 220px; height: 34px; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255,205,80,.85) 0%, rgba(255,160,20,.45) 45%, transparent 72%);
+  animation: goldPulse 1.6s ease-in-out infinite; pointer-events: none;
+}
+@keyframes goldPulse { 0%,100% { opacity: .85; transform: translateX(-50%) scaleX(1); } 50% { opacity: 1; transform: translateX(-50%) scaleX(1.08); } }
+.name-plate {
+  position: absolute; left: 50%; bottom: 52px; transform: translateX(-50%); z-index: 4;
+  background: #111; color: #fff; font-size: 21px; font-weight: 900; padding: 6px 20px;
+  clip-path: polygon(0 12%, 4% 0, 96% 4%, 100% 18%, 98% 88%, 92% 100%, 6% 96%, 0 82%);
+  white-space: nowrap;
+}
+.select-title { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 4; }
+.select-title .brush { font-size: 26px; }
+.chev {
+  position: absolute; top: 46%; z-index: 5; width: 54px; height: 54px; border-radius: 50%;
+  background: rgba(10,10,10,.72); border: 2px solid #888; color: #fff; font-size: 30px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: Arial, sans-serif;
+}
+.chev.left { left: 18px; } .chev.right { right: 18px; }
+.pad-controls {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 5;
+  display: flex; gap: 34px; font-size: 17px; font-weight: 800; color: #fff; text-shadow: 0 2px 0 #000;
+}
+.pad-controls b {
+  display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  border-radius: 50%; border: 2px solid #fff; font-size: 14px; margin-right: 7px; font-family: Arial, sans-serif;
+}
+.stat-panel {
+  position: absolute; right: 26px; top: 18%; z-index: 4; width: 210px;
+  background: rgba(12,12,12,.72); border: 1px solid rgba(255,255,255,.25); padding: 14px 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.5);
+}
+.stat-panel .row { display: flex; align-items: center; gap: 10px; margin: 9px 0; font-size: 14px; font-weight: 800; letter-spacing: 1px; }
+.stat-panel .row .lab { width: 52px; color: #eee; }
+.stat-panel .row .track { flex: 1; height: 9px; background: #222; border: 1px solid #000; }
+.stat-panel .row .track i { display: block; height: 100%; background: #e8e8e8; }
+.stat-panel .tagline { margin-top: 12px; font-size: 14px; font-style: italic; color: #ffd75e; font-weight: 700; line-height: 1.35; }
+
+/* ---------- narration ---------- */
+.narr-who { color: #ffd75e; }
+.narr-panel {
+  position: absolute; left: 44px; top: 110px; width: 560px; z-index: 4;
+  /* FULLY OPAQUE: the .82 panel let castle.svg's floating-island
+     trapezoids show through and cut across the story text */
+  background: linear-gradient(#141210, #0c0b0a);
+  border: 1px solid rgba(255,255,255,.18); padding: 30px 34px;
+  box-shadow: 0 10px 34px rgba(0,0,0,.6);
+}
+.narr-panel p { font-size: 24px; line-height: 1.55; font-weight: 600; color: #f4f0e8; text-align: center; font-family: Georgia, "Times New Roman", serif; }
+.narr-panel p + p { margin-top: 22px; }
+.narr-bottom {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; text-align: center;
+  padding: 30px 40px 64px; font-size: 23px; font-weight: 700; color: #fff; text-shadow: 0 2px 0 #000;
+  background: linear-gradient(transparent, rgba(0,0,0,.75) 45%); pointer-events: none;
+}
+.narr-continue {
+  position: absolute; right: 34px; bottom: 18px; z-index: 6; font-size: 19px; font-weight: 800;
+  color: #fff; text-shadow: 0 2px 0 #000; cursor: pointer; pointer-events: auto;
+  background: rgba(10,10,10,.6); border: 1px solid rgba(255,255,255,.4); padding: 8px 16px; border-radius: 6px;
+}
+.narr-continue b { display: inline-flex; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; align-items: center; justify-content: center; font-size: 13px; margin-right: 8px; }
+
+/* ---------- level run (FRONT VIEW: road runs away from the camera) ---------- */
+.run-gate {
+  position: absolute; left: 50%; bottom: 160px; width: 340px; height: 300px;
+  transform: translateX(-50%); transform-origin: 50% 100%; z-index: 2;
+  pointer-events: none;
+}
+.run-gate svg { width: 100%; height: 100%; display: block; }
+.hero-shadow {
+  position: absolute; z-index: 2; pointer-events: none; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.55) 0%, transparent 70%);
+}
+.gate-marker {
+  position: absolute; z-index: 4; text-align: center; font-weight: 900; color: #fff;
+  text-shadow: 0 2px 0 #000, 0 0 12px rgba(0,0,0,.9); font-size: 19px; line-height: 1.25;
+  transform: translate(-50%, 0); pointer-events: none;
+}
+.gate-marker .diamond { font-size: 30px; color: #ffd75e; display: block; }
+.distance-chip {
+  position: absolute; right: 150px; top: 190px; z-index: 4; font-size: 17px; font-weight: 800;
+  color: #fff; text-shadow: 0 2px 0 #000; text-align: right;
+}
+
+/* ---------- troops ---------- */
+.fig.risen img { filter: drop-shadow(0 0 7px rgba(255,255,255,.4)) drop-shadow(0 4px 8px rgba(0,0,0,.7)); }
+.ink-pool {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 105px; z-index: 2;
+  background: radial-gradient(ellipse at 68% 100%, #000 30%, rgba(0,0,0,.85) 55%, transparent 78%);
+  pointer-events: none;
+}
+.rise-hint { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 4; font-size: 17px; font-weight: 800; color: #ddd; text-shadow: 0 2px 0 #000; }
+
+/* ---------- boss ---------- */
+/* fiery slash arc: flame colours ONLY here (core #FFE45C / mid #FF9F1C /
+   edge #FF5A00); shown only while a slash is active */
+.slash-arc {
+  position: absolute; z-index: 6; width: 320px; height: 180px;
+  pointer-events: none; opacity: 0; transition: opacity .08s;
+}
+.slash-arc svg { width: 100%; height: 100%; display: block; }
+.boss-chips { position: absolute; z-index: 4; pointer-events: none; display: flex; flex-direction: column; gap: 5px; }
+.boss-chips .mini-chip {
+  background: #f5f0e6; color: #111; border: 1.5px solid #222; border-radius: 2px;
+  font-family: "Courier New", monospace; font-weight: 700; font-size: 11px; padding: 2px 6px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.5); transform: rotate(-2deg); white-space: nowrap;
+}
+.boss-chips .mini-chip:nth-child(2) { transform: rotate(1.5deg); margin-left: 14px; }
+.boss-chips .mini-chip:nth-child(3) { transform: rotate(-1deg); margin-left: 4px; }
+.void-telegraph {
+  position: absolute; z-index: 2; border: 3px dashed #fff; border-radius: 6px;
+  background: rgba(0,0,0,.55); pointer-events: none;
+  animation: voidBlink .25s steps(2) infinite;
+}
+@keyframes voidBlink { 50% { opacity: .35; } }
+
+#err {
+  position: fixed; left: 8px; bottom: 8px; z-index: 99; max-width: 60vw;
+  background: rgba(120,0,0,.9); color: #fff; font: 13px monospace; padding: 8px 10px; border-radius: 4px;
+}

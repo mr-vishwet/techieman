@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 340">
+  <defs>
+    <linearGradient id="capeSh" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#000"/>
+    </linearGradient>
+  </defs>
+  <!-- streaming cape -->
+  <path d="M96 84 Q 48 78 14 106 Q 44 104 30 134 Q 60 126 54 154 Q 78 144 86 158 L 108 98 Z" fill="url(#capeSh)" stroke="#3d3d3d" stroke-width="1.5"/>
+  <!-- long hair (behind the torso so it never covers the ALGO chest) -->
+  <path d="M96 62 Q 82 92 88 122 Q 98 96 100 70 Z" fill="#000"/>
+  <path d="M136 62 Q 150 92 144 124 Q 132 98 132 70 Z" fill="#000"/>
+  <!-- wide archer lunge legs -->
+  <path d="M100 200 L 62 276 L 76 286 L 116 212 Z" fill="#0d0d0d" stroke="#2c2c2c" stroke-width="1"/>
+  <path d="M128 204 L 164 268 L 178 258 L 144 200 Z" fill="#111" stroke="#333" stroke-width="1"/>
+  <!-- torso, ALGO chest -->
+  <path d="M88 88 L 138 88 L 146 150 L 138 208 L 98 208 L 88 150 Z" fill="#111" stroke="#333" stroke-width="1.5"/>
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="28" text-anchor="middle">
+    <text x="117" y="140" fill="#5a5a5a">ALGO</text>
+    <text x="115" y="138" fill="#8a8a8a">ALGO</text>
+    <text x="113" y="136" fill="#c9c9c9">ALGO</text>
+    <text x="112" y="135" fill="#ffffff">ALGO</text>
+  </g>
+  <!-- long hair -->
+  <path d="M100 60 Q 88 90 92 120 Q 104 96 104 70 Z" fill="#000" opacity="0"/>
+  <path d="M132 60 Q 146 92 140 124 Q 128 98 128 70 Z" fill="#000" opacity="0"/>
+  <!-- head -->
+  <path d="M98 62 L 92 42 L 104 50 L 108 30 L 118 46 L 128 26 L 132 48 L 144 38 L 138 58 L 148 54 L 138 70 Q 116 80 98 62 Z" fill="#000"/>
+  <ellipse cx="116" cy="64" rx="18" ry="19" fill="#0a0a0a"/>
+  <ellipse cx="108" cy="64" rx="4.5" ry="2.6" fill="#fff"/>
+  <ellipse cx="126" cy="64" rx="4.5" ry="2.6" fill="#fff"/>
+  <!-- bow arm + longbow, arrow nocked — the bow sits OUT to the hero's
+       right so the string and arrow shaft clear the ALGO chest lettering
+       (they used to bisect the G and cross the whole word: "AL GO") -->
+  <path d="M150 94 Q 172 100 188 116 L 180 126 Q 162 112 146 108 Z" fill="#0a0a0a"/>
+  <path d="M188 96 Q 212 130 188 176 Q 202 130 188 96 Z" fill="#0a0a0a"/>
+  <path d="M188 96 Q 168 136 188 176" fill="none" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="168" y1="136" x2="216" y2="136" stroke="#ddd" stroke-width="2"/>
+  <polygon points="216,136 204,131 204,141" fill="#ddd"/>
+  <!-- draw arm -->
+  <path d="M92 96 Q 108 118 122 132 L 114 142 Q 98 126 84 108 Z" fill="#0a0a0a"/>
+  <!-- boots -->
+  <path d="M58 274 L 80 284 L 86 296 L 54 290 Z" fill="#000"/>
+  <path d="M162 266 L 180 256 L 192 266 L 172 276 Z" fill="#000"/>
+</svg>

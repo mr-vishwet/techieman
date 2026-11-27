@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 520">
+  <defs>
+    <linearGradient id="leakBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d3d3d"/><stop offset="1" stop-color="#111"/>
+    </linearGradient>
+  </defs>
+  <!-- spiky crown -->
+  <path d="M150 92 L 140 44 L 168 66 L 180 22 L 196 64 L 214 26 L 226 66 L 252 42 L 244 92 Z" fill="#161616"/>
+  <!-- hollow face -->
+  <ellipse cx="196" cy="108" rx="42" ry="36" fill="#0a0a0a"/>
+  <ellipse cx="180" cy="104" rx="7" ry="5" fill="#fff"/>
+  <ellipse cx="212" cy="104" rx="7" ry="5" fill="#fff"/>
+  <!-- hollow mouth: a dark slit, never a smile -->
+  <rect x="182" y="128" width="28" height="6" fill="#000" stroke="#333" stroke-width="1"/>
+  <!-- neck + shoulders + torso: the crowned head connects INTO the letter
+       mass — the neck overlaps the face, the torso slab rises up behind
+       the LEAK letters, so no band of sky sits between head and body -->
+  <path d="M168 126 L224 126 L232 188 L160 188 Z" fill="#232323" stroke="#111" stroke-width="2"/>
+  <path d="M84 210 Q196 158 308 210 L314 344 L78 344 Z" fill="url(#leakBody)" stroke="#111" stroke-width="2"/>
+  <!-- body IS the word LEAK, huge cracked stone letters -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" text-anchor="middle">
+    <g font-size="150">
+      <text x="216" y="300" fill="#4a4a4a">LEAK</text>
+      <text x="210" y="294" fill="#7a7a7a">LEAK</text>
+      <text x="204" y="288" fill="#b5b5b5">LEAK</text>
+      <text x="201" y="285" fill="#e6e6e6" stroke="#222" stroke-width="2">LEAK</text>
+    </g>
+  </g>
+  <!-- cracks -->
+  <g stroke="#111" stroke-width="3" fill="none" opacity=".85">
+    <path d="M150 220 L 176 250 L 160 280"/><path d="M260 230 L 240 262 L 262 290"/>
+    <path d="M110 300 L 140 320"/><path d="M300 300 L 280 326"/>
+  </g>
+  <!-- long clawed arms hanging to the ground -->
+  <path d="M96 200 Q 40 260 52 360 L 78 360 Q 70 280 112 230 Z" fill="url(#leakBody)" stroke="#111" stroke-width="2"/>
+  <path d="M52 360 L 40 400 M 62 362 L 58 404 M 74 360 L 78 398" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <path d="M304 200 Q 360 260 348 360 L 322 360 Q 330 280 288 230 Z" fill="url(#leakBody)" stroke="#111" stroke-width="2"/>
+  <path d="M348 360 L 360 400 M 338 362 L 342 404 M 326 360 L 322 398" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <!-- legs / dripping base -->
+  <path d="M140 330 L 132 440 L 176 440 L 176 330 Z" fill="#1c1c1c"/>
+  <path d="M224 330 L 224 440 L 268 440 L 260 330 Z" fill="#1c1c1c"/>
+  <!-- black ink drips off the body -->
+  <g fill="#000">
+    <path d="M130 300 Q 150 360 132 420 Q 152 360 160 305 Z"/>
+    <path d="M240 300 Q 260 350 246 400 Q 264 350 268 305 Z"/>
+    <path d="M180 330 Q 196 380 184 430 Q 200 380 206 335 Z"/>
+    <circle cx="140" cy="452" r="8"/><circle cx="200" cy="462" r="6"/><circle cx="258" cy="452" r="9"/>
+  </g>
+  <!-- ink pool at feet — kept small/flat so troops standing in front of the
+       golem are not swallowed by a black ellipse -->
+  <ellipse cx="200" cy="498" rx="150" ry="12" fill="#000" opacity=".85"/>
+</svg>

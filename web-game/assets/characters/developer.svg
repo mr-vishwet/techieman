@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 340">
+  <defs>
+    <linearGradient id="blade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bdbdbd"/>
+    </linearGradient>
+    <linearGradient id="capeSh" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#000"/>
+    </linearGradient>
+  </defs>
+  <!-- flowing cape -->
+  <path d="M78 78 Q 30 90 8 130 Q 34 128 22 160 Q 48 152 40 190 Q 66 178 62 210 Q 84 200 92 214 L 108 96 Z" fill="url(#capeSh)" stroke="#3d3d3d" stroke-width="1.5"/>
+  <path d="M80 84 Q 44 96 26 128" fill="none" stroke="#666" stroke-width="1.5" opacity=".8"/>
+  <!-- back arm -->
+  <path d="M92 96 Q 66 130 60 168 L 74 172 Q 82 138 104 112 Z" fill="#0a0a0a"/>
+  <!-- legs: LEARN left, CONQUER right (letters run down each leg) -->
+  <path d="M96 210 L 88 300 L 108 300 L 110 212 Z" fill="#0d0d0d" stroke="#2c2c2c" stroke-width="1"/>
+  <path d="M124 210 L 128 300 L 148 300 L 140 212 Z" fill="#0d0d0d" stroke="#2c2c2c" stroke-width="1"/>
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" fill="#f2f2f2">
+    <text x="92" y="292" font-size="15" transform="rotate(-90 92 292)" letter-spacing="1">LEARN</text>
+    <text x="146" y="292" font-size="13" transform="rotate(-90 146 292)" letter-spacing="1">CONQUER</text>
+  </g>
+  <!-- boots -->
+  <path d="M86 300 L 110 300 L 112 312 L 82 312 Z" fill="#000"/>
+  <path d="M126 300 L 150 300 L 154 312 L 124 312 Z" fill="#000"/>
+  <!-- torso -->
+  <path d="M84 88 L 140 88 L 146 160 L 136 214 L 96 214 L 86 160 Z" fill="#111" stroke="#333" stroke-width="1.5"/>
+  <!-- CODE chest, extruded: stacked offset copies -->
+  <g font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="30" text-anchor="middle">
+    <text x="117" y="152" fill="#5a5a5a">CODE</text>
+    <text x="115" y="150" fill="#8a8a8a">CODE</text>
+    <text x="113" y="148" fill="#c9c9c9">CODE</text>
+    <text x="112" y="147" fill="#ffffff">CODE</text>
+  </g>
+  <!-- belt -->
+  <rect x="90" y="196" width="52" height="9" fill="#000" stroke="#555" stroke-width="1"/>
+  <rect x="110" y="196" width="12" height="9" fill="#c9c9c9" stroke="#222"/>
+  <!-- head: spiky hair, shadowed face, white eyes -->
+  <path d="M96 62 L 88 40 L 102 48 L 104 26 L 114 44 L 126 22 L 130 46 L 144 34 L 138 56 L 150 52 L 138 70 Q 116 80 96 62 Z" fill="#000"/>
+  <ellipse cx="116" cy="66" rx="19" ry="20" fill="#0a0a0a"/>
+  <path d="M98 60 L 134 60 L 132 72 Q 116 78 100 72 Z" fill="#000"/>
+  <ellipse cx="108" cy="66" rx="4.5" ry="2.6" fill="#fff"/>
+  <ellipse cx="126" cy="66" rx="4.5" ry="2.6" fill="#fff"/>
+  <!-- sword arm + Code Sword (blade reads ?.let { }) -->
+  <path d="M136 94 Q 162 108 178 128 L 168 138 Q 150 118 132 110 Z" fill="#0a0a0a"/>
+  <g transform="rotate(26 182 132)">
+    <rect x="177" y="124" width="11" height="28" rx="2" fill="#222" stroke="#888" stroke-width="1"/>
+    <rect x="170" y="117" width="24" height="8" rx="2" fill="#666"/>
+    <polygon points="180,116 185,96 190,96 190,116" fill="url(#blade)" stroke="#666" stroke-width=".8"/>
+    <polygon points="180,96 185,30 190,30 190,96" fill="url(#blade)" stroke="#666" stroke-width=".8"/>
+    <polygon points="185,30 190,30 187,20" fill="#fff" stroke="#666" stroke-width=".8"/>
+    <text x="192" y="92" font-family="Courier New, monospace" font-size="7" font-weight="700" fill="#222" transform="rotate(90 192 92)">?.let { }</text>
+  </g>
+  <ellipse cx="172" cy="134" rx="8" ry="7" fill="#0a0a0a"/>
+  <!-- warm gold rim light (preview style) -->
+  <path d="M140 90 L146 158" fill="none" stroke="#e8b73a" stroke-width="2" opacity=".55"/>
+  <path d="M108 96 Q 92 130 96 160" fill="none" stroke="#e8b73a" stroke-width="1.5" opacity=".35"/>
+</svg>
