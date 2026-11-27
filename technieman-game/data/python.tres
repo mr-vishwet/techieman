@@ -1,0 +1,62 @@
+[gd_resource type="Resource" script_class="LanguageData" format=3]
+
+[ext_resource type="Script" path="res://scripts/language_data.gd" id="1_8hgp6"]
+
+[resource]
+script = ExtResource("1_8hgp6")
+id = "python"
+display_name = "Python"
+road = "Python road"
+boss = "TIMEOUT"
+boss_title = "The Long Wait"
+boss_taunt = "Wait. Just... wait."
+phase_line = "The wait doubles. Set a timeout — always."
+victory_line = "TIMEOUT falls. The request returned. Python holds."
+code_lines = Array[String](["requests.get(url, timeout=None)  # waits forever", "while True: retry()  # no backoff, no exit", "time.sleep(3600)  # hope nobody notices", "response = requests.get(api)  # no timeout, no try", "    return result  # one space off — IndentationError"])
+troops = Array[Dictionary]([{
+"attack_range": 1.4,
+"behavior": "chase",
+"cooldown": 0.8,
+"damage": 10,
+"height": 1.4,
+"hp": 1,
+"id": "leak_scamp",
+"model": "res://models/leak_scamp.glb",
+"name": "LEAK Scamp",
+"speed": 4.2,
+"teaches": "A null can be anywhere. Check before you reach."
+}, {
+"attack_range": 1.6,
+"behavior": "skitter",
+"cooldown": 1.0,
+"damage": 10,
+"height": 1.7,
+"hp": 1,
+"id": "leak_skitter",
+"model": "res://models/leak_skitter.glb",
+"name": "LEAK Skitter",
+"speed": 3.8,
+"teaches": "A null never moves the way you expect. Wait for the pause."
+}, {
+"attack_range": 2.0,
+"behavior": "brute",
+"cooldown": 1.6,
+"damage": 20,
+"height": 2.4,
+"hp": 3,
+"id": "leak_brute",
+"model": "res://models/leak_brute.glb",
+"name": "LEAK Brute",
+"speed": 1.8,
+"teaches": "An uncaught exception ends the run. Answer it or fall."
+}])
+waves = Array[Dictionary]([{
+"spawn": [["leak_scamp", 14.0], ["leak_scamp", 17.0]],
+"trigger_x": 10.0
+}, {
+"spawn": [["leak_scamp", 28.0], ["leak_skitter", 31.0], ["leak_scamp", 33.0]],
+"trigger_x": 24.0
+}, {
+"spawn": [["leak_skitter", 39.0], ["leak_brute", 41.5]],
+"trigger_x": 36.0
+}])

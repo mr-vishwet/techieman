@@ -4,3 +4,11 @@ build/
 *.import
 # Export templates live outside the repo (tools dir)
 # Web export output and APKs are binaries — never push via the connector
+# Binary model assets: staged locally in models/, NOT pushed (the GitHub
+# connector push is text-only). They reach the repo via GitHub web upload
+# or a local git push from the user's machine — see BINARY_ASSETS.md.
+models/*.glb
+models/src/*.blend
+models/src/*.blend1
+verification/frames/
+verification/blender-previews/

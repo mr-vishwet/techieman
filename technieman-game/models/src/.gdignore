@@ -1,0 +1,5 @@
+# Blender source files live here. Godot must not scan this directory:
+# a .blend file makes the editor query the Blender importer, which fails
+# headless (no Blender path) and aborts the whole project import — the
+# .glb files next door never get .import files. The .glb files in models/
+# are the only engine assets; these .blend files are the DCC sources.

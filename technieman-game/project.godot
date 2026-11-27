@@ -10,7 +10,7 @@ config_version=5
 [application]
 
 config/name="TechieMan"
-config/description="TechieMan — a programming-language learning game. M0: project foundation only."
+config/description="TechieMan — a programming-language learning game. M1: vertical slice (hero + LEAK troops + NULLPOINTER boss, Kotlin road)."
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
@@ -85,3 +85,16 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 textures/vram_compression/import_etc2_astc=true
+
+[physics]
+
+# Physics interpolation: the camera follows a physics body from _process;
+# without it the follow jitters at display rates above the 60 Hz physics
+# tick (camera-systems gotcha). CharacterBody3D works with it.
+common/physics_interpolation=true
+
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="player"
+3d_physics/layer_3="enemy"
